@@ -54,6 +54,10 @@ jobs:
           assert '<meta name="viewport"' in html, 'Mobile viewport missing'
           assert 'role="status"' in html, 'Status announcement missing'
           assert page.scripts, 'Inline application script missing'
+          assert 'href="#main-content"' in html, 'Keyboard skip link missing'
+          assert 'id="main-content"' in html, 'Main landmark target missing'
+          assert 'function show(id){if(!$(id))return;' in html, 'Unknown panel guard missing'
+          assert "$(id).focus({preventScroll:true})" in html, 'Panel focus management missing'
           with tempfile.TemporaryDirectory() as folder:
               path = Path(folder) / 'app.js'
               path.write_text('\n'.join(page.scripts), encoding='utf-8')
