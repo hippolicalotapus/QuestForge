@@ -1,0 +1,16 @@
+name: QuestForge static checks
+on:
+  push:
+    branches: [feature/revenue-ready-storefront]
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify required site features and safe contact placeholder
+        run: python3 scripts/verify_site.py
