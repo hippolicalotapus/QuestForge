@@ -39,10 +39,27 @@ def run(site):
                         page.locator("#map button[onclick=\"show('studio')\"]").click()
                         assert "active" in (page.locator("#studio").get_attribute("class") or "")
                         assert page.locator("#welcome").is_hidden()
+                        page.locator("#forgeTitle").fill("Smoke Test Adventure")
+                        page.locator("#forgeLevel").fill("1")
+                        page.locator("#forgeParty").fill("4")
+                        page.get_by_role("button", name="Build Playable Draft").click()
+                        assert page.locator("#forgeDraft").is_visible(), "Adventure draft did not appear"
+                        assert "Smoke Test Adventure" in page.locator("#forgeDraft").inner_text()
+                        page.locator("#forgeDmNotes").fill("Smoke test DM note")
+                        page.get_by_role("button", name="Save Draft on Device").click()
+                        assert page.evaluate("localStorage.getItem('qf-adventure-draft-v1')") is not None
+                        page.get_by_role("button", name="Restore Saved Draft").click()
+                        assert "Smoke test DM note" in page.locator("#forgeDraft").inner_text()
+                        page.get_by_role("button", name="Add to Adventure Library").click()
+                        assert len(page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")) == 1
+                        page.get_by_role("button", name="Add to Adventure Library").click()
+                        assert len(page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")) == 1, "Duplicate library save was accepted"
+                        assert "already in your library" in page.locator("#forgeStatus").inner_text()
+                        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 2"), "Horizontal overflow detected"
                         page.get_by_role("button", name="Home & Map").click()
                         assert page.locator("#welcome").is_visible()
                         assert not errors, f"JavaScript errors: {errors}"
-                        print(f"PASS {name}: map, workshop, home, no JavaScript exceptions")
+                        print(f"PASS {name}: navigation, draft, notes, local save, restore, library duplicate guard, layout")
                     except Exception as exc:
                         failures.append(f"{name}: {exc}")
                     finally:
@@ -53,7 +70,7 @@ def run(site):
         server.shutdown()
         server.server_close()
     if failures:
-        raise SystemExit("Browser smoke FAILED:\\n" + "\\n".join(failures))
+        raise SystemExit("Browser smoke FAILED:\n" + "\n".join(failures))
 
 
 if __name__ == "__main__":
