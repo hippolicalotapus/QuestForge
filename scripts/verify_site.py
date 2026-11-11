@@ -25,7 +25,7 @@ for fn in ["printAdventureDraft", "addAdventureToLibrary", "importAdventureLibra
 print("QuestForge static checks passed (not a substitute for browser tests).")
 
 # Extract inline JavaScript for a real parser check in the workflow.
-scripts = re.findall(r"<script(?:\\s[^>]*)?>([\\s\\S]*?)</script>", site, flags=re.I)
+scripts = re.findall(r"<script[^>]*>(.*?)</script>", site, flags=re.I | re.S)
 assert len(scripts) == 1, f"Expected one inline script; found {len(scripts)}"
 Path("/tmp/questforge-inline.js").write_text(scripts[0], encoding="utf-8")
 print("Inline JavaScript extracted for Node syntax validation.")
