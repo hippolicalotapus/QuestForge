@@ -67,6 +67,15 @@ def run(site):
                         data = json.loads(backup_path.read_text(encoding="utf-8"))
                         assert data["schema"] == "questforge-adventure-library-backup-v1"
                         assert len(data["entries"]) == 1
+                        assert data["entries"][0]["draft"]["title"] == "Smoke Test Adventure"
+                        # Verify a real backup can restore a deleted local library.
+                        page.evaluate("localStorage.removeItem('qf-adventure-library-v1')")
+                        assert page.evaluate("localStorage.getItem('qf-adventure-library-v1')") is None
+                        page.locator("#forgeLibraryImport").set_input_files(str(backup_path))
+                        page.once("dialog", lambda dialog: dialog.accept())
+                        page.get_by_role("button", name="Import Library Backup").click()
+                        restored = page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")
+                        assert len(restored) == 1 and restored[0]["draft"]["title"] == "Smoke Test Adventure", "Valid backup did not restore"
                         page.locator("#forgeLibraryImport").set_input_files({
                             "name": "invalid-backup.json",
                             "mimeType": "application/json",
@@ -92,7 +101,7 @@ def run(site):
                         assert page.locator("#welcome").is_visible()
                         assert not errors, f"JavaScript errors: {errors}"
                         page.screenshot(path=str(evidence / f'{name}-passed.png'), full_page=True)
-                        print(f"PASS {name}: navigation, draft, save/restore, duplicate guard, JSON export/import rejection, PDF rendering, layout")
+                        print(f"PASS {name}: navigation, draft, save/restore, duplicate guard, JSON backup roundtrip/rejection, PDF rendering, layout")
                     except Exception as exc:
                         failures.append(f"{name}: {exc}")
                         try:
