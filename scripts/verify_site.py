@@ -23,3 +23,9 @@ assert site.count("<style") == site.count("</style>"), "Unbalanced style tags"
 for fn in ["printAdventureDraft", "addAdventureToLibrary", "importAdventureLibrary"]:
     assert re.search(r"onclick=[\"']" + fn + r"\(\)[\"']", site), f"Missing UI action: {fn}"
 print("QuestForge static checks passed (not a substitute for browser tests).")
+
+# Extract inline JavaScript for a real parser check in the workflow.
+scripts = re.findall(r"<script(?:\\s[^>]*)?>([\\s\\S]*?)</script>", site, flags=re.I)
+assert len(scripts) == 1, f"Expected one inline script; found {len(scripts)}"
+Path("/tmp/questforge-inline.js").write_text(scripts[0], encoding="utf-8")
+print("Inline JavaScript extracted for Node syntax validation.")
