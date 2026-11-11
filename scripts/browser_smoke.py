@@ -75,6 +75,8 @@ def run(site):
                         page.get_by_role("button", name="Import Library Backup").click()
                         assert "Not a compatible" in page.locator("#forgeStatus").inner_text()
                         assert len(page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")) == 1
+                        # Suppress the native dialog so Chromium can inspect the prepared print layout.
+                        page.evaluate("window.print = () => {}")
                         page.get_by_role("button", name="Print Draft").click()
                         assert page.locator("#qf-print-cover").count() == 1
                         assert "Smoke Test Adventure" in page.locator("#qf-print-cover").inner_text()
@@ -83,6 +85,8 @@ def run(site):
                         assert pdf_bytes.startswith(b"%PDF-"), "PDF rendering failed"
                         (evidence / f"{name}-adventure.pdf").write_bytes(pdf_bytes)
                         page.emulate_media(media="screen")
+                        page.reload(wait_until="load")
+                        assert page.locator("#qf-print-cover").count() == 0, "Temporary print cover leaked into a new session"
                         assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 2"), "Horizontal overflow detected"
                         page.get_by_role("button", name="Home & Map").click()
                         assert page.locator("#welcome").is_visible()
