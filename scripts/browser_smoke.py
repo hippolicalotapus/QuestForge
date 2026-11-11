@@ -22,6 +22,8 @@ def run(site):
     Thread(target=server.serve_forever, daemon=True).start()
     url = f"http://127.0.0.1:{server.server_port}/{site.name}"
     failures = []
+    evidence = Path('test-results')
+    evidence.mkdir(exist_ok=True)
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(headless=True)
@@ -59,9 +61,15 @@ def run(site):
                         page.get_by_role("button", name="Home & Map").click()
                         assert page.locator("#welcome").is_visible()
                         assert not errors, f"JavaScript errors: {errors}"
+                        page.screenshot(path=str(evidence / f'{name}-passed.png'), full_page=True)
                         print(f"PASS {name}: navigation, draft, notes, local save, restore, library duplicate guard, layout")
                     except Exception as exc:
                         failures.append(f"{name}: {exc}")
+                        try:
+                            page.screenshot(path=str(evidence / f'{name}-failed.png'), full_page=True)
+                            (evidence / f'{name}-error.txt').write_text(str(exc) + '\\n' + '\\n'.join(errors), encoding='utf-8')
+                        except Exception as screenshot_error:
+                            failures.append(f'{name}: could not capture diagnostics: {screenshot_error}')
                     finally:
                         context.close()
             finally:
