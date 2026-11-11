@@ -9,6 +9,7 @@ Tests the actual repository index.html on desktop and mobile. No deployment.
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+import json
 from threading import Thread
 import sys
 from playwright.sync_api import sync_playwright
@@ -57,12 +58,37 @@ def run(site):
                         page.get_by_role("button", name="Add to Adventure Library").click()
                         assert len(page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")) == 1, "Duplicate library save was accepted"
                         assert "already in your library" in page.locator("#forgeStatus").inner_text()
+                        with page.expect_download() as download_event:
+                            page.get_by_role("button", name="Back Up Library JSON").click()
+                        backup = download_event.value
+                        assert backup.suggested_filename.endswith(".json")
+                        backup_path = evidence / f"{name}-library-backup.json"
+                        backup.save_as(str(backup_path))
+                        data = json.loads(backup_path.read_text(encoding="utf-8"))
+                        assert data["schema"] == "questforge-adventure-library-backup-v1"
+                        assert len(data["entries"]) == 1
+                        page.locator("#forgeLibraryImport").set_input_files({
+                            "name": "invalid-backup.json",
+                            "mimeType": "application/json",
+                            "buffer": b'{"schema":"wrong","entries":[]}'
+                        })
+                        page.get_by_role("button", name="Import Library Backup").click()
+                        assert "Not a compatible" in page.locator("#forgeStatus").inner_text()
+                        assert len(page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")) == 1
+                        page.get_by_role("button", name="Print Draft").click()
+                        assert page.locator("#qf-print-cover").count() == 1
+                        assert "Smoke Test Adventure" in page.locator("#qf-print-cover").inner_text()
+                        page.emulate_media(media="print")
+                        pdf_bytes = page.pdf(format="A4", print_background=True)
+                        assert pdf_bytes.startswith(b"%PDF-"), "PDF rendering failed"
+                        (evidence / f"{name}-adventure.pdf").write_bytes(pdf_bytes)
+                        page.emulate_media(media="screen")
                         assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 2"), "Horizontal overflow detected"
                         page.get_by_role("button", name="Home & Map").click()
                         assert page.locator("#welcome").is_visible()
                         assert not errors, f"JavaScript errors: {errors}"
                         page.screenshot(path=str(evidence / f'{name}-passed.png'), full_page=True)
-                        print(f"PASS {name}: navigation, draft, notes, local save, restore, library duplicate guard, layout")
+                        print(f"PASS {name}: navigation, draft, save/restore, duplicate guard, JSON export/import rejection, PDF rendering, layout")
                     except Exception as exc:
                         failures.append(f"{name}: {exc}")
                         try:
