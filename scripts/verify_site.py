@@ -29,3 +29,13 @@ scripts = re.findall(r"<script[^>]*>(.*?)</script>", site, flags=re.I | re.S)
 assert len(scripts) == 1, f"Expected one inline script; found {len(scripts)}"
 Path("/tmp/questforge-inline.js").write_text(scripts[0], encoding="utf-8")
 print("Inline JavaScript extracted for Node syntax validation.")
+
+# Catch broken navigation/actions and duplicate HTML IDs before browser testing.
+ids = re.findall(r'\\bid=["\\']([^"\\']+)["\\']', site)
+duplicates = sorted({value for value in ids if ids.count(value) > 1})
+assert not duplicates, f"Duplicate HTML IDs: {duplicates}"
+inline = scripts[0]
+handlers = sorted(set(re.findall(r'onclick=["\\']([A-Za-z_$][\\w$]*)\\(', site)))
+missing_handlers = [name for name in handlers if not re.search(r'\\bfunction\\s+' + re.escape(name) + r'\\s*\\(', inline)]
+assert not missing_handlers, f"Missing JavaScript click handlers: {missing_handlers}"
+print(f"Verified {len(ids)} unique HTML IDs and {len(handlers)} click handler names.")
