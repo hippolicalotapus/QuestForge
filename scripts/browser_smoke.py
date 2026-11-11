@@ -67,7 +67,7 @@ def run(site):
                         failures.append(f"{name}: {exc}")
                         try:
                             page.screenshot(path=str(evidence / f'{name}-failed.png'), full_page=True)
-                            (evidence / f'{name}-error.txt').write_text(str(exc) + '\\n' + '\\n'.join(errors), encoding='utf-8')
+                            (evidence / f'{name}-error.txt').write_text(str(exc) + '\n' + '\n'.join(errors), encoding='utf-8')
                         except Exception as screenshot_error:
                             failures.append(f'{name}: could not capture diagnostics: {screenshot_error}')
                     finally:
