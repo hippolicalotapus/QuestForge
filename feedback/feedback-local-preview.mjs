@@ -14,6 +14,12 @@ function createLocalPreviewRouter({submit}) {
  if(typeof submit!=='function')throw new TypeError('POST handler required');
  return async function route(req,res){
   const path=req.url?.split('?')[0];
+  // Reject DNS-rebinding Host headers even though the socket binds to loopback.
+  const host=req.headers?.host;
+  if(host && !/^127\\.0\\.0\\.1:\\d+$/.test(host)){
+   res.writeHead(403,{'content-type':'text/plain; charset=utf-8','cache-control':'no-store'});
+   res.end('Only the local loopback host is allowed');return;
+  }
   // A browser must not use another site's origin to post into this local service.
   if(req.method==='POST' && path==='/api/feedback' && req.headers?.origin){
    const host=req.headers.host;
