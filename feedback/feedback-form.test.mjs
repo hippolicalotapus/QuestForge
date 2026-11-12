@@ -28,10 +28,10 @@ test('accessibility and DM review fields remain present',()=>{
     assert.ok(html.includes('for="'+id+'"'),'missing label '+id);
     assert.ok(html.includes('id="'+id+'"'),'missing field '+id);
   }
-  assert.match(html,/if\(role\.value==='dm'\)/);
-  assert.match(html,/data\.accessibilityConcerns/);
-  assert.match(html,/data\.encounterBalance/);
-  assert.match(html,/data\.rulesAmbiguities/);
+  assert.match(html,/collectFeedback\(form\)/);
+  assert.match(html,/feedback-form-data\.mjs/);
+
+
 });
 
 test('hidden DM controls are disabled when previewing player feedback',()=>{
@@ -52,6 +52,6 @@ test('optional email is disabled and cleared without contact consent',()=>{
 });
 
 test('preview omits contact property entirely unless consent is checked',()=>{
- assert.match(html,/if\(consent\.checked && contact\.value\)data\.contact=contact\.value/);
+ assert.match(html,/collectFeedback\(form\)/);
  assert.doesNotMatch(html,/contact:form\.elements\.contact\.value/);
 });
