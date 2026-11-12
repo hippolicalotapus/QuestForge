@@ -18,3 +18,26 @@ test('local feedback service validates, saves and returns a receipt without open
   assert.equal(saved.receipt,res.body.receipt);assert.equal(saved.feedback.kind,'player');assert.equal(saved.contact,null);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('local feedback service rejects invalid data without creating a record',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-service-'));
+ try {
+  const filePath=join(dir,'feedback.jsonl');
+  const listener=createLocalFeedbackService({filePath,privateDirectory:dir});
+  const res=response();await listener(request({kind:'player',adventureId:'voynich-playtest',version:'1.0',partySize:4}),res);
+  assert.equal(res.status,400);assert.equal(res.body.ok,false);
+  await assert.rejects(readFile(filePath,'utf8'),{code:'ENOENT'});
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
+test('local feedback service saves opted-in DM contact separately from feedback',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-service-'));
+ try {
+  const filePath=join(dir,'feedback.jsonl');
+  const listener=createLocalFeedbackService({filePath,privateDirectory:dir});
+  const res=response();await listener(request({kind:'dm',adventureId:'voynich-playtest',version:'1.0',partySize:4,partyLevel:1,consentToContact:true,contact:'dm@example.com'}),res);
+  assert.equal(res.status,201);
+  const saved=JSON.parse((await readFile(filePath,'utf8')).trim());
+  assert.equal(saved.feedback.kind,'dm');assert.equal(saved.contact,'dm@example.com');
+  assert.equal(Object.hasOwn(saved.feedback,'contact'),false);
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
