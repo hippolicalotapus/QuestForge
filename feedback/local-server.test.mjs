@@ -23,7 +23,7 @@ test('local server accepts feedback over loopback HTTP and writes a receipt',asy
    child.once('error',err=>{clearTimeout(timeout);reject(err);});
    child.once('exit',code=>{clearTimeout(timeout);reject(new Error('Local server exited: '+code));});
   });
-  const result=await fetch(address,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'player',adventureId:'voynich-playtest',version:'1.0'})});
+  const result=await fetch(address+'/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'player',adventureId:'voynich-playtest',version:'1.0'})});
   assert.equal(result.status,201);
   const body=await result.json();assert.equal(body.ok,true);assert.ok(body.receipt);
   const saved=JSON.parse((await readFile(join(dir,'feedback.jsonl'),'utf8')).trim());
