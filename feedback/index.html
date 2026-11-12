@@ -9,10 +9,13 @@
 <fieldset><legend>Experience</legend>
 <label for="clarity">Clarity (1–5)<select id="clarity" name="clarity"><option value="">Prefer not to rate</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
 <label for="suggestions">Suggestions<textarea id="suggestions" name="suggestions" maxlength="2000" rows="5"></textarea></label>
+<label for="accessibilityConcerns">Accessibility concerns<textarea id="accessibilityConcerns" name="accessibilityConcerns" maxlength="2000" rows="3"></textarea></label>
 </fieldset>
 <fieldset id="dmFields" hidden><legend>Dungeon Master session</legend>
 <label for="partySize">Party size<input id="partySize" name="partySize" type="number" min="1" max="30" step="1"></label>
 <label for="partyLevel">Party level<input id="partyLevel" name="partyLevel" type="number" min="1" max="20" step="1"></label>
+<label for="encounterBalance">Encounter balance (1–5)<select id="encounterBalance" name="encounterBalance"><option value="">Prefer not to rate</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+<label for="rulesAmbiguities">Rules ambiguities<textarea id="rulesAmbiguities" name="rulesAmbiguities" maxlength="2000" rows="3"></textarea></label>
 </fieldset>
 <fieldset><legend>Optional follow-up</legend><label for="consentToContact"><input id="consentToContact" name="consentToContact" type="checkbox" style="display:inline;width:auto"> I agree to be contacted about my feedback</label><label for="contact">Email (only if opted in)<input id="contact" name="contact" type="email" autocomplete="email" maxlength="254"></label></fieldset>
 <button type="submit">Validate preview (does not send)</button><p id="result" role="status" aria-live="polite"></p></form></main>
@@ -28,7 +31,8 @@ form.addEventListener('submit',event=>{
  const data={kind:role.value,adventureId:form.elements.adventureId.value,version:form.elements.version.value,consentToContact:form.elements.consentToContact.checked,contact:form.elements.contact.value};
  if(form.elements.clarity.value)data.clarity=Number(form.elements.clarity.value);
  if(form.elements.suggestions.value)data.suggestions=form.elements.suggestions.value;
- if(role.value==='dm'){data.partySize=Number(form.elements.partySize.value);data.partyLevel=Number(form.elements.partyLevel.value);}
+ if(form.elements.accessibilityConcerns.value)data.accessibilityConcerns=form.elements.accessibilityConcerns.value;
+ if(role.value==='dm'){data.partySize=Number(form.elements.partySize.value);data.partyLevel=Number(form.elements.partyLevel.value);if(form.elements.encounterBalance.value)data.encounterBalance=Number(form.elements.encounterBalance.value);if(form.elements.rulesAmbiguities.value)data.rulesAmbiguities=form.elements.rulesAmbiguities.value;}
  const result=validateFeedback(data);
  document.getElementById('result').textContent=result.ok?'Valid preview. No information was saved or sent.':result.error;
 });
