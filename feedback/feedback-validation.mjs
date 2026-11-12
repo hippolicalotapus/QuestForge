@@ -5,6 +5,8 @@ const ratings = ['clarity', 'pacing', 'challenge', 'enjoyment', 'encounterBalanc
 const notes = ['confusingPassages', 'accessibilityConcerns', 'suggestions', 'rulesAmbiguities', 'safetyConcerns', 'fixes'];
 function validateFeedback(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) return {ok:false, error:'Invalid submission'};
+  const allowed = new Set(['kind','adventureId','version','consentToContact','contact','partySize','partyLevel',...ratings,...notes]);
+  if (Object.keys(input).some(field => !allowed.has(field))) return {ok:false, error:'Unexpected field'};
   const {kind, adventureId, version, consentToContact = false, contact = ''} = input;
   if (!kinds.has(kind)) return {ok:false, error:'Invalid form type'};
   if (typeof adventureId !== 'string' || !/^[a-z0-9][a-z0-9_-]{1,79}$/i.test(adventureId)) return {ok:false, error:'Invalid adventure identifier'};
@@ -15,6 +17,7 @@ function validateFeedback(input) {
   if (consentToContact && !contact) return {ok:false, error:'Contact email required for opt-in'};
   for (const field of ratings) if (input[field] !== undefined && (!Number.isInteger(input[field]) || input[field] < 1 || input[field] > 5)) return {ok:false, error:`Invalid ${field}`};
   for (const field of notes) if (input[field] !== undefined && (typeof input[field] !== 'string' || input[field].length > 2000)) return {ok:false, error:`Invalid ${field}`};
+  if (kind === 'player' && (input.partySize !== undefined || input.partyLevel !== undefined)) return {ok:false, error:'DM fields on player form'};
   if (kind === 'dm') {
     if (!Number.isInteger(input.partySize) || input.partySize < 1 || input.partySize > 30) return {ok:false, error:'Invalid party size'};
     if (!Number.isInteger(input.partyLevel) || input.partyLevel < 1 || input.partyLevel > 20) return {ok:false, error:'Invalid party level'};
