@@ -17,7 +17,10 @@ function createFeedbackHandler({save, maxBytes = 16_384, rateLimit = createRateL
     try { quota = await rateLimit(key); }
     catch { return {status:503,body:{ok:false,error:'Rate limiter unavailable'}}; }
     if (!quota || typeof quota.allowed !== 'boolean') return {status:503,body:{ok:false,error:'Rate limiter unavailable'}};
-    if (!quota.allowed) return {status:429,body:{ok:false,error:'Too many requests'}};
+    if (!quota.allowed) {
+      const retryAfterMs = Number.isSafeInteger(quota.retryAfterMs) && quota.retryAfterMs > 0 ? quota.retryAfterMs : undefined;
+      return {status:429,body:{ok:false,error:'Too many requests',...(retryAfterMs ? {retryAfterMs} : {})}};
+    }
     let parsed;
     try { parsed=JSON.parse(body); } catch { return {status:400,body:{ok:false,error:'Malformed JSON'}}; }
     const result=await submit(parsed);
