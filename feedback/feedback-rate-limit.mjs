@@ -3,10 +3,15 @@
 function createRateLimiter({limit=5,windowMs=60_000,now=()=>Date.now()}={}) {
   if(!Number.isSafeInteger(limit)||limit<1||!Number.isSafeInteger(windowMs)||windowMs<1) throw new RangeError('Invalid rate-limit configuration');
   const buckets=new Map();
+  // Expire stale entries on checks to avoid retaining inactive identities indefinitely.
+  let checks=0;
   return function check(key) {
     if(typeof key!=='string'||key.length<1||key.length>256) return {allowed:false,retryAfterMs:windowMs};
     const time=now();
     if(!Number.isFinite(time)) return {allowed:false,retryAfterMs:windowMs};
+    if (++checks % 100 === 0) for (const [id, entry] of buckets) {
+      if (time < entry.start || time-entry.start >= windowMs) buckets.delete(id);
+    }
     const current=buckets.get(key);
     if(!current||time-current.start>=windowMs||time<current.start){buckets.set(key,{start:time,count:1});return {allowed:true,retryAfterMs:0};}
     if(current.count>=limit) return {allowed:false,retryAfterMs:Math.max(1,windowMs-(time-current.start))};
