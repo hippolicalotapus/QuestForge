@@ -11,7 +11,7 @@ test('local store appends separate private JSONL records and returns receipts',a
   const a=await save({feedback:{kind:'player'},contact:null});
   const b=await save({feedback:{kind:'dm'},contact:'opt-in@example.com'});
   assert.notEqual(a,b);
-  const rows=(await readFile(path,'utf8')).trimEnd().split('\\n').map(JSON.parse);
+  const rows=(await readFile(path,'utf8')).trimEnd().split('\n').map(JSON.parse);
   assert.equal(rows.length,2);assert.equal(rows[0].receipt,a);assert.equal(rows[1].receipt,b);
   assert.equal(rows[1].contact,'opt-in@example.com');
   assert.equal((await stat(path)).mode&0o077,0);
