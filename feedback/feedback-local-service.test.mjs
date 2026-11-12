@@ -65,3 +65,14 @@ test('local service reports unavailable storage without issuing a false receipt'
   assert.equal(Object.hasOwn(res.body,'receipt'),false);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('local service never persists contact when consent is absent',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-service-'));
+ try {
+  const filePath=join(dir,'feedback.jsonl');
+  const listener=createLocalFeedbackService({filePath,privateDirectory:dir});
+  const res=response();await listener(request({kind:'player',adventureId:'voynich-playtest',version:'1.0',contact:'unconsented@example.com'}),res);
+  assert.equal(res.status,400);
+  await assert.rejects(readFile(filePath,'utf8'),{code:'ENOENT'});
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
