@@ -6,6 +6,10 @@ function createNodeFeedbackListener({save, rateLimit, maxBytes=16_384}={}) {
   return async function listener(req,res) {
     const send=(status,body)=>{res.writeHead(status,{'content-type':'application/json; charset=utf-8','cache-control':'no-store'});res.end(JSON.stringify(body));};
     try {
+      // Reject unsupported requests before reading their bodies.
+      if(req.method!=='POST'){send(405,{ok:false,error:'Method not allowed'});return;}
+      if(typeof req.headers?.['content-type']!=='string'||!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'])){send(415,{ok:false,error:'JSON required'});return;}
+      if(typeof req.socket?.remoteAddress!=='string'||!req.socket.remoteAddress.trim()){send(400,{ok:false,error:'Missing request rate-limit identity'});return;}
       const chunks=[];let size=0;
       for await (const chunk of req) {
         size+=Buffer.byteLength(chunk);
