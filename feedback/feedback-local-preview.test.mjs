@@ -41,3 +41,15 @@ test('local form has async submit handler and no offline success message',async(
  assert.doesNotMatch(page.body,/Valid preview\. No information was saved or sent/);
  assert.match(page.body,/submitLocal\(data\)/);
 });
+
+test('local feedback endpoint rejects cross-origin browser requests',async()=>{
+ let called=0;
+ const route=createLocalPreviewRouter({submit:(_req,res)=>{called++;res.writeHead(201,{});res.end('ok');}});
+ const req={method:'POST',url:'/api/feedback',headers:{host:'127.0.0.1:3000',origin:'https://example.test'}};
+ const res={writeHead(code){this.status=code;},end(body){this.body=body;}};
+ await route(req,res);
+ assert.equal(res.status,403);assert.equal(called,0);
+ req.headers.origin='http://127.0.0.1:3000';
+ await route(req,res);
+ assert.equal(res.status,201);assert.equal(called,1);
+});
