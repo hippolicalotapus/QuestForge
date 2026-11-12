@@ -15,3 +15,11 @@ test('reject unexpected fields and cross-form party data',()=>{
   assert.equal(validateFeedback({...player, partyLevel:1}).ok,false);
   assert.equal(validateFeedback({...dm, unexpected:'value'}).ok,false);
 });
+
+test('reject DM-only rating and notes on player form',()=>{
+  for (const field of ['encounterBalance','mapUsability','rulesAmbiguities','fixes']) {
+    const value = field === 'encounterBalance' || field === 'mapUsability' ? 3 : 'note';
+    assert.equal(validateFeedback({...player,[field]:value}).ok,false);
+    assert.equal(validateFeedback({...dm,[field]:value}).ok,true);
+  }
+});
