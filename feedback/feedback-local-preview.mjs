@@ -16,7 +16,7 @@ function createLocalPreviewRouter({submit}) {
   const path=req.url?.split('?')[0];
   // Reject DNS-rebinding Host headers even though the socket binds to loopback.
   const host=req.headers?.host;
-  if(host && !/^127\\.0\\.0\\.1:\\d+$/.test(host)){
+  if(host && !/^127\.0\.0\.1:\d+$/.test(host)){
    res.writeHead(403,{'content-type':'text/plain; charset=utf-8','cache-control':'no-store'});
    res.end('Only the local loopback host is allowed');return;
   }
