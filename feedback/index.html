@@ -32,7 +32,8 @@ function syncRole(){const isDM=role.value==='dm';dm.hidden=!isDM;for(const field
 role.addEventListener('change',()=>{syncRole();document.getElementById('result').textContent='';});syncRole();
 form.addEventListener('submit',event=>{
  event.preventDefault();
- const data={kind:role.value,adventureId:form.elements.adventureId.value,version:form.elements.version.value,consentToContact:form.elements.consentToContact.checked,contact:form.elements.contact.value};
+ const data={kind:role.value,adventureId:form.elements.adventureId.value,version:form.elements.version.value,consentToContact:form.elements.consentToContact.checked};
+ if(consent.checked && contact.value)data.contact=contact.value;
  if(form.elements.clarity.value)data.clarity=Number(form.elements.clarity.value);
  if(form.elements.suggestions.value)data.suggestions=form.elements.suggestions.value;
  if(form.elements.accessibilityConcerns.value)data.accessibilityConcerns=form.elements.accessibilityConcerns.value;
