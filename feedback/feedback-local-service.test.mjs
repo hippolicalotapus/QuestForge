@@ -51,6 +51,6 @@ test('local feedback service returns 429 and preserves one saved record when quo
   const payload={kind:'player',adventureId:'voynich-playtest',version:'1.0'};
   const first=response();await listener(request(payload),first);assert.equal(first.status,201);
   const second=response();await listener(request(payload),second);assert.equal(second.status,429);
-  assert.equal((await readFile(filePath,'utf8')).trim().split('\\n').length,1);
+  assert.equal((await readFile(filePath,'utf8')).trim().split('\n').length,1);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
