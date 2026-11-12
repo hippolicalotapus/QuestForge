@@ -17,7 +17,7 @@ function validateFeedback(input) {
   if (consentToContact && !contact) return {ok:false, error:'Contact email required for opt-in'};
   for (const field of ratings) if (input[field] !== undefined && (!Number.isInteger(input[field]) || input[field] < 1 || input[field] > 5)) return {ok:false, error:`Invalid ${field}`};
   for (const field of notes) if (input[field] !== undefined && (typeof input[field] !== 'string' || input[field].length > 2000)) return {ok:false, error:`Invalid ${field}`};
-  if (kind === 'player' && (input.partySize !== undefined || input.partyLevel !== undefined)) return {ok:false, error:'DM fields on player form'};
+  if (kind === 'player' && (input.partySize !== undefined || input.partyLevel !== undefined || input.encounterBalance !== undefined || input.mapUsability !== undefined || input.rulesAmbiguities !== undefined || input.fixes !== undefined)) return {ok:false, error:'DM fields on player form'};
   if (kind === 'dm') {
     if (!Number.isInteger(input.partySize) || input.partySize < 1 || input.partySize > 30) return {ok:false, error:'Invalid party size'};
     if (!Number.isInteger(input.partyLevel) || input.partyLevel < 1 || input.partyLevel > 20) return {ok:false, error:'Invalid party level'};
