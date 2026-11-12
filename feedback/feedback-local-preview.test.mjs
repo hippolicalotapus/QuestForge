@@ -25,3 +25,11 @@ test('local form prevents repeat submission while awaiting receipt',async()=>{
  assert.match(page.body,/button\.disabled=true/);
  assert.match(page.body,/finally \{button\.disabled=false;\}/);
 });
+
+test('local preview refuses to silently serve a broken form transformation',async()=>{
+ const route=createLocalPreviewRouter({submit:()=>{}});
+ const page=await request(route,'GET','/');
+ assert.doesNotMatch(page.body,/Offline preview only/);
+ assert.doesNotMatch(page.body,/Validate preview \(does not send\)/);
+ assert.match(page.body,/async event=>/);
+});
