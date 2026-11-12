@@ -53,3 +53,13 @@ test('local feedback endpoint rejects cross-origin browser requests',async()=>{
  await route(req,res);
  assert.equal(res.status,201);assert.equal(called,1);
 });
+
+test('local preview rejects non-loopback Host headers',async()=>{
+ let called=0;
+ const route=createLocalPreviewRouter({submit:()=>{called++;}});
+ const res={writeHead(code){this.status=code;},end(body){this.body=body;}};
+ await route({method:'GET',url:'/',headers:{host:'attacker.example:3000'}},res);
+ assert.equal(res.status,403);
+ await route({method:'POST',url:'/api/feedback',headers:{host:'attacker.example:3000'}},res);
+ assert.equal(res.status,403);assert.equal(called,0);
+});
