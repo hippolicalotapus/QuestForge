@@ -43,3 +43,10 @@ test('hidden DM controls are disabled when previewing player feedback',()=>{
 test('role changes clear stale validation status',()=>{
  assert.match(html,/role\.addEventListener\('change',\(\)=>\{syncRole\(\);document\.getElementById\('result'\)\.textContent=''\;\}\)/);
 });
+
+test('optional email is disabled and cleared without contact consent',()=>{
+ assert.match(html,/id="contact"[^>]*disabled/);
+ assert.match(html,/contact\.disabled=!consent\.checked/);
+ assert.match(html,/if\(!consent\.checked\)contact\.value=''/);
+ assert.match(html,/consent\.addEventListener\('change'/);
+});
