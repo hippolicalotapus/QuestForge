@@ -8,3 +8,14 @@ function response(){return {status:null,headers:null,body:null,writeHead(status,
 test('Node listener stores valid feedback and ignores forwarded spoofing',async()=>{let writes=0;const listener=createNodeFeedbackListener({save:async()=>{writes++;return 'receipt'}});const res=response();await listener(request(),res);assert.equal(res.status,201);assert.equal(res.headers['cache-control'],'no-store');assert.equal(writes,1);});
 test('Node listener rejects oversized streams before saving',async()=>{let writes=0;const listener=createNodeFeedbackListener({save:async()=>{writes++;return 'receipt'},maxBytes:100});const res=response();await listener(request('x'.repeat(101)),res);assert.equal(res.status,413);assert.equal(writes,0);});
 test('Node listener rejects missing connection identity',async()=>{const listener=createNodeFeedbackListener({save:async()=> 'receipt'});const req=request();req.socket={};const res=response();await listener(req,res);assert.equal(res.status,400);});
+
+test('rejects unsupported requests without consuming request stream',async()=>{
+ let reads=0;
+ const request={method:'GET',headers:{'content-type':'application/json'},socket:{remoteAddress:'127.0.0.1'},async *[Symbol.asyncIterator](){reads++;yield Buffer.from(valid);}};
+ const listener=createNodeFeedbackListener({save:async()=> 'receipt'});
+ const res=response();await listener(request,res);
+ assert.equal(res.status,405);assert.equal(reads,0);
+ request.method='POST';request.headers={'content-type':'text/plain'};
+ const res2=response();await listener(request,res2);
+ assert.equal(res2.status,415);assert.equal(reads,0);
+});
