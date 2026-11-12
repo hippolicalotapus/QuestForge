@@ -48,3 +48,16 @@ test('local store rejects group-readable storage directories',async()=>{
    await assert.rejects(save({feedback:{kind:'player'},contact:null}),/directory must be private/);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('local store rejects symlinked feedback file',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-feedback-'));
+ try {
+   const destination=join(dir,'actual.jsonl');
+   const {writeFile}=await import('node:fs/promises');
+   await writeFile(destination,'', {mode:0o600});
+   await symlink(destination,join(dir,'link.jsonl'));
+   const save=createLocalFeedbackStore({filePath:join(dir,'link.jsonl'),privateDirectory:dir});
+   await assert.rejects(save({feedback:{kind:'player'},contact:null}),/ELOOP|symbolic link|symlink/i);
+   assert.equal(await readFile(destination,'utf8'),'');
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
