@@ -54,3 +54,12 @@ test('integrated limiter blocks excess submissions per identity and resets at wi
  assert.equal((await handle(req())).status,201);
  assert.equal(writes,4);
 });
+
+test('fails closed if limiter throws, rejects, or returns an invalid decision',async()=>{
+ let writes=0;
+ for(const rateLimit of [()=>{throw Error('down')},async()=>{throw Error('down')},()=>null,()=>({allowed:'yes'})]){
+   const handle=createFeedbackHandler({save:async()=>{writes++;return 'receipt'},rateLimit});
+   assert.equal((await handle(req())).status,503);
+ }
+ assert.equal(writes,0);
+});
