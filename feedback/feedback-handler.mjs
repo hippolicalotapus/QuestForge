@@ -13,8 +13,11 @@ function createFeedbackHandler({save, maxBytes = 16_384, rateLimit = createRateL
     if (typeof body !== 'string' || Buffer.byteLength(body,'utf8') > maxBytes) return {status:413,body:{ok:false,error:'Request too large'}};
     const key = request.rateLimitKey;
     if (typeof key !== 'string' || !key.trim() || key.length > 256) return {status:400,body:{ok:false,error:'Missing request rate-limit identity'}};
-    const quota = rateLimit(key);
-    if (!quota || quota.allowed !== true) return {status:429,body:{ok:false,error:'Too many requests'}};
+    let quota;
+    try { quota = await rateLimit(key); }
+    catch { return {status:503,body:{ok:false,error:'Rate limiter unavailable'}}; }
+    if (!quota || typeof quota.allowed !== 'boolean') return {status:503,body:{ok:false,error:'Rate limiter unavailable'}};
+    if (!quota.allowed) return {status:429,body:{ok:false,error:'Too many requests'}};
     let parsed;
     try { parsed=JSON.parse(body); } catch { return {status:400,body:{ok:false,error:'Malformed JSON'}}; }
     const result=await submit(parsed);
