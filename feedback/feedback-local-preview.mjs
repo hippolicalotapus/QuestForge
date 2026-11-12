@@ -14,6 +14,14 @@ function createLocalPreviewRouter({submit}) {
  if(typeof submit!=='function')throw new TypeError('POST handler required');
  return async function route(req,res){
   const path=req.url?.split('?')[0];
+  // A browser must not use another site's origin to post into this local service.
+  if(req.method==='POST' && path==='/api/feedback' && req.headers?.origin){
+   const host=req.headers.host;
+   if(!host || req.headers.origin!=='http://'+host){
+    res.writeHead(403,{'content-type':'text/plain; charset=utf-8','cache-control':'no-store'});
+    res.end('Cross-origin local feedback submissions are not allowed');return;
+   }
+  }
   if(req.method==='POST' && path==='/api/feedback')return submit(req,res);
   if(req.method==='GET' && (path==='/' || assets.has(path))){
    const file=path==='/'?'index.html':assets.get(path);
