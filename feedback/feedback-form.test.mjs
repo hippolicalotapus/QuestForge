@@ -33,3 +33,9 @@ test('accessibility and DM review fields remain present',()=>{
   assert.match(html,/data\.encounterBalance/);
   assert.match(html,/data\.rulesAmbiguities/);
 });
+
+test('hidden DM controls are disabled when previewing player feedback',()=>{
+ assert.match(html,/querySelectorAll\('input,select,textarea'\)/);
+ assert.match(html,/field\.disabled=!isDM/);
+ assert.match(html,/querySelectorAll\('input\[type=number\]'\)/);
+});
