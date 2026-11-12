@@ -39,3 +39,7 @@ test('hidden DM controls are disabled when previewing player feedback',()=>{
  assert.match(html,/field\.disabled=!isDM/);
  assert.match(html,/querySelectorAll\('input\[type=number\]'\)/);
 });
+
+test('role changes clear stale validation status',()=>{
+ assert.match(html,/role\.addEventListener\('change',\(\)=>\{syncRole\(\);document\.getElementById\('result'\)\.textContent=''\;\}\)/);
+});
