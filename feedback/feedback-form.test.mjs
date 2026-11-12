@@ -50,3 +50,8 @@ test('optional email is disabled and cleared without contact consent',()=>{
  assert.match(html,/if\(!consent\.checked\)contact\.value=''/);
  assert.match(html,/consent\.addEventListener\('change'/);
 });
+
+test('preview omits contact property entirely unless consent is checked',()=>{
+ assert.match(html,/if\(consent\.checked && contact\.value\)data\.contact=contact\.value/);
+ assert.doesNotMatch(html,/contact:form\.elements\.contact\.value/);
+});
