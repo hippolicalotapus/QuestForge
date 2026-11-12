@@ -54,3 +54,14 @@ test('local feedback service returns 429 and preserves one saved record when quo
   assert.equal((await readFile(filePath,'utf8')).trim().split('\n').length,1);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('local service reports unavailable storage without issuing a false receipt',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-service-'));
+ try {
+  const missing=join(dir,'missing');
+  const listener=createLocalFeedbackService({filePath:join(missing,'feedback.jsonl'),privateDirectory:missing});
+  const res=response();await listener(request({kind:'player',adventureId:'voynich-playtest',version:'1.0'}),res);
+  assert.equal(res.status,503);assert.equal(res.body.ok,false);
+  assert.equal(Object.hasOwn(res.body,'receipt'),false);
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
