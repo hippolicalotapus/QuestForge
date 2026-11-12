@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createFeedbackHandler} from './feedback-handler.mjs';
+import {createRateLimiter} from './feedback-rate-limit.mjs';
 const valid=JSON.stringify({kind:'player',adventureId:'voynich-playtest',version:'1.0'});
 const req=(body=valid)=>({method:'POST',contentType:'application/json',rateLimitKey:'test-client',body});
 test('rejects wrong method, media type and oversized requests before storage',async()=>{
@@ -38,4 +39,18 @@ test('enforces per-client request limit before parsing and storage',async()=>{
  assert.equal((await handle(req())).status,429);
  assert.equal(writes,0);
  assert.equal((await handle({...req(),rateLimitKey:''})).status,400);
+});
+
+test('integrated limiter blocks excess submissions per identity and resets at window boundary',async()=>{
+ let time=0;let writes=0;
+ const rateLimit=createRateLimiter({limit:2,windowMs:100,now:()=>time});
+ const handle=createFeedbackHandler({save:async()=>{writes++;return 'receipt'},rateLimit});
+ assert.equal((await handle(req())).status,201);
+ assert.equal((await handle(req())).status,201);
+ assert.equal((await handle(req())).status,429);
+ assert.equal((await handle({...req(),rateLimitKey:'other-client'})).status,201);
+ assert.equal(writes,3);
+ time=100;
+ assert.equal((await handle(req())).status,201);
+ assert.equal(writes,4);
 });
