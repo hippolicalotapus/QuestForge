@@ -8,3 +8,10 @@ test('optional contact requires affirmative consent',()=>{assert.equal(validateF
 test('reject invalid identifiers, ratings and long text',()=>{for(const change of [{adventureId:'../bad'},{version:''},{clarity:6},{suggestions:'x'.repeat(2001)},{kind:'unknown'}]) assert.equal(validateFeedback({...player,...change}).ok,false)});
 test('DM form validates party size and level',()=>{assert.equal(validateFeedback({...dm,partySize:0}).ok,false);assert.equal(validateFeedback({...dm,partyLevel:21}).ok,false)});
 test('invalid shapes fail closed',()=>{for(const input of [null,[],false,{}]) assert.equal(validateFeedback(input).ok,false)});
+
+test('reject unexpected fields and cross-form party data',()=>{
+  assert.equal(validateFeedback({...player, admin:true}).ok,false);
+  assert.equal(validateFeedback({...player, partySize:4}).ok,false);
+  assert.equal(validateFeedback({...player, partyLevel:1}).ok,false);
+  assert.equal(validateFeedback({...dm, unexpected:'value'}).ok,false);
+});
