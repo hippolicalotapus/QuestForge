@@ -10,6 +10,12 @@ function createNodeFeedbackListener({save, rateLimit, maxBytes=16_384}={}) {
       if(req.method!=='POST'){send(405,{ok:false,error:'Method not allowed'});return;}
       if(typeof req.headers?.['content-type']!=='string'||!/^application\/json(?:\s*;|$)/i.test(req.headers['content-type'])){send(415,{ok:false,error:'JSON required'});return;}
       if(typeof req.socket?.remoteAddress!=='string'||!req.socket.remoteAddress.trim()){send(400,{ok:false,error:'Missing request rate-limit identity'});return;}
+      // Reject a declared oversized body before buffering any bytes. Stream limit remains authoritative.
+      const declaredLength=req.headers?.['content-length'];
+      if(declaredLength!==undefined){
+        if(typeof declaredLength!=='string'||!/^(0|[1-9][0-9]*)$/.test(declaredLength)) {send(400,{ok:false,error:'Invalid Content-Length'});return;}
+        if(BigInt(declaredLength)>BigInt(maxBytes)){send(413,{ok:false,error:'Request too large'});return;}
+      }
       const chunks=[];let size=0;
       for await (const chunk of req) {
         size+=Buffer.byteLength(chunk);
