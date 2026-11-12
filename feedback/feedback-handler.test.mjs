@@ -73,3 +73,11 @@ test('throttled response provides only a safe positive retry delay',async()=>{
    assert.deepEqual(await handle(req()),{status:429,body:{ok:false,error:'Too many requests'}});
  }
 });
+
+test('rejects client-provided rate-limit identity inside JSON payload',async()=>{
+ let writes=0;
+ const handle=createFeedbackHandler({save:async()=>{writes++;return 'receipt'}});
+ const body=JSON.stringify({...JSON.parse(valid),rateLimitKey:'spoofed-client'});
+ assert.equal((await handle(req(body))).status,400);
+ assert.equal(writes,0);
+});
