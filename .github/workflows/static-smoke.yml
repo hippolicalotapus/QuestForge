@@ -68,3 +68,6 @@ jobs:
               subprocess.run(['node', '--check', str(path)], check=True)
           print('QuestForge static smoke checks passed')
           PY
+
+      - name: Run feedback validation unit tests
+        run: node --test feedback/*.test.mjs
