@@ -17,3 +17,11 @@ test('local preview routes POST only to feedback endpoint',async()=>{
  assert.equal((await request(route,'POST','/api/feedback')).status,201);assert.equal(called,1);
  assert.equal((await request(route,'POST','/')).status,404);
 });
+
+test('local form prevents repeat submission while awaiting receipt',async()=>{
+ const route=createLocalPreviewRouter({submit:()=>{}});
+ const page=await request(route,'GET','/');
+ assert.match(page.body,/if\(button\.disabled\)return/);
+ assert.match(page.body,/button\.disabled=true/);
+ assert.match(page.body,/finally \{button\.disabled=false;\}/);
+});
