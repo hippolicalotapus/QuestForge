@@ -7,7 +7,7 @@ import {createLocalFeedbackStore} from './feedback-local-store.mjs';
 test('local store appends separate private JSONL records and returns receipts',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'questforge-feedback-'));
  try {
-  const path=join(dir,'private.jsonl');const save=createLocalFeedbackStore({filePath:path});
+  const path=join(dir,'private.jsonl');const save=createLocalFeedbackStore({filePath:path,privateDirectory:dir});
   const a=await save({feedback:{kind:'player'},contact:null});
   const b=await save({feedback:{kind:'dm'},contact:'opt-in@example.com'});
   assert.notEqual(a,b);
@@ -19,6 +19,14 @@ test('local store appends separate private JSONL records and returns receipts',a
 });
 test('local store rejects files with permissions accessible to others',async()=>{
  const dir=await mkdtemp(join(tmpdir(),'questforge-feedback-'));
- try {const path=join(dir,'private.jsonl');const save=createLocalFeedbackStore({filePath:path});await save({feedback:{kind:'player'},contact:null});await chmod(path,0o644);await assert.rejects(save({feedback:{kind:'player'},contact:null}),/private/);}
+ try {const path=join(dir,'private.jsonl');const save=createLocalFeedbackStore({filePath:path,privateDirectory:dir});await save({feedback:{kind:'player'},contact:null});await chmod(path,0o644);await assert.rejects(save({feedback:{kind:'player'},contact:null}),/private/);}
  finally {await rm(dir,{recursive:true,force:true});}
+});
+
+test('local store refuses paths outside its configured private directory',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-feedback-'));
+ try {
+  assert.throws(()=>createLocalFeedbackStore({filePath:join(dir,'..','public.jsonl'),privateDirectory:dir}),/inside private directory/);
+  assert.throws(()=>createLocalFeedbackStore({filePath:join(dir,'private.jsonl')}),/private storage directory/);
+ } finally {await rm(dir,{recursive:true,force:true});}
 });
