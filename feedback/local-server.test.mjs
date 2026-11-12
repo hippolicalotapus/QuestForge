@@ -44,13 +44,13 @@ test('local server accepts feedback over loopback HTTP and writes a receipt',asy
   const dmResponse=await fetch(address+'/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(dmPayload)});
   assert.equal(dmResponse.status,201);
   const dmBody=await dmResponse.json();assert.equal(dmBody.ok,true);assert.ok(dmBody.receipt);
-  const lines=(await readFile(join(dir,'feedback.jsonl'),'utf8')).trim().split('\\n').map(JSON.parse);
+  const lines=(await readFile(join(dir,'feedback.jsonl'),'utf8')).trim().split('\n').map(JSON.parse);
   assert.equal(lines.length,2);
   assert.equal(lines[1].receipt,dmBody.receipt);
   assert.equal(lines[1].feedback.kind,'dm');
   assert.equal(lines[1].contact,'synthetic@example.test');
   const invalid=await fetch(address+'/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...dmPayload,consentToContact:false})});
   assert.equal(invalid.status,400);
-  assert.equal((await readFile(join(dir,'feedback.jsonl'),'utf8')).trim().split('\\n').length,2);
+  assert.equal((await readFile(join(dir,'feedback.jsonl'),'utf8')).trim().split('\n').length,2);
  } finally {child.kill();await rm(dir,{recursive:true,force:true});}
 });
