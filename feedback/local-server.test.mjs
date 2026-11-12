@@ -23,6 +23,18 @@ test('local server accepts feedback over loopback HTTP and writes a receipt',asy
    child.once('error',err=>{clearTimeout(timeout);reject(err);});
    child.once('exit',code=>{clearTimeout(timeout);reject(new Error('Local server exited: '+code));});
   });
+  const page=await fetch(address+'/');
+  assert.equal(page.status,200);
+  assert.match(page.headers.get('content-type'),/text\/html/);
+  const html=await page.text();
+  assert.match(html,/Submit local test feedback/);
+  assert.match(html,/createFeedbackFormController/);
+  for(const asset of ['/feedback-validation.mjs','/feedback-form-data.mjs','/feedback-form-controller.mjs','/feedback-browser-submit.mjs']) {
+   const moduleResponse=await fetch(address+asset);
+   assert.equal(moduleResponse.status,200,'module unavailable: '+asset);
+   assert.match(moduleResponse.headers.get('content-type'),/javascript/);
+  }
+  assert.equal((await fetch(address+'/nonexistent')).status,404);
   const result=await fetch(address+'/api/feedback',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'player',adventureId:'voynich-playtest',version:'1.0'})});
   assert.equal(result.status,201);
   const body=await result.json();assert.equal(body.ok,true);assert.ok(body.receipt);
