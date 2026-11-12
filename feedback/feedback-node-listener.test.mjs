@@ -19,3 +19,12 @@ test('rejects unsupported requests without consuming request stream',async()=>{
  const res2=response();await listener(request,res2);
  assert.equal(res2.status,415);assert.equal(reads,0);
 });
+
+test('rejects oversized or malformed Content-Length without reading body',async()=>{
+ let reads=0;const req={method:'POST',headers:{'content-type':'application/json','content-length':'9999999999999999999999999'},socket:{remoteAddress:'127.0.0.1'},async *[Symbol.asyncIterator](){reads++;yield Buffer.from(valid);}};
+ const listener=createNodeFeedbackListener({save:async()=> 'receipt',maxBytes:128});
+ const tooLarge=response();await listener(req,tooLarge);assert.equal(tooLarge.status,413);assert.equal(reads,0);
+ for(const length of ['-1','1e3','01','garbage']){
+   req.headers['content-length']=length;const res=response();await listener(req,res);assert.equal(res.status,400);assert.equal(reads,0);
+ }
+});
