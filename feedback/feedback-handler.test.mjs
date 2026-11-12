@@ -63,3 +63,13 @@ test('fails closed if limiter throws, rejects, or returns an invalid decision',a
  }
  assert.equal(writes,0);
 });
+
+test('throttled response provides only a safe positive retry delay',async()=>{
+ const save=async()=>{throw Error('must not save')};
+ const withDelay=createFeedbackHandler({save,rateLimit:()=>({allowed:false,retryAfterMs:2500})});
+ assert.deepEqual(await withDelay(req()),{status:429,body:{ok:false,error:'Too many requests',retryAfterMs:2500}});
+ for(const retryAfterMs of [-1,Infinity,'1000']){
+   const handle=createFeedbackHandler({save,rateLimit:()=>({allowed:false,retryAfterMs})});
+   assert.deepEqual(await handle(req()),{status:429,body:{ok:false,error:'Too many requests'}});
+ }
+});
