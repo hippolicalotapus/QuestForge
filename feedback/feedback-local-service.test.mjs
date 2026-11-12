@@ -41,3 +41,16 @@ test('local feedback service saves opted-in DM contact separately from feedback'
   assert.equal(Object.hasOwn(saved.feedback,'contact'),false);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('local feedback service returns 429 and preserves one saved record when quota is exceeded',async()=>{
+ const {createRateLimiter}=await import('./feedback-rate-limit.mjs');
+ const dir=await mkdtemp(join(tmpdir(),'questforge-service-'));
+ try {
+  const filePath=join(dir,'feedback.jsonl');
+  const listener=createLocalFeedbackService({filePath,privateDirectory:dir,rateLimit:createRateLimiter({limit:1,windowMs:60_000,now:()=>100})});
+  const payload={kind:'player',adventureId:'voynich-playtest',version:'1.0'};
+  const first=response();await listener(request(payload),first);assert.equal(first.status,201);
+  const second=response();await listener(request(payload),second);assert.equal(second.status,429);
+  assert.equal((await readFile(filePath,'utf8')).trim().split('\\n').length,1);
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
