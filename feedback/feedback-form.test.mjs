@@ -22,3 +22,14 @@ test('form imports shared validation and does not claim receipt',()=>{
   assert.match(html,/validateFeedback\(data\)/);
   assert.match(html,/No information was saved or sent/);
 });
+
+test('accessibility and DM review fields remain present',()=>{
+  for(const id of ['accessibilityConcerns','encounterBalance','rulesAmbiguities']) {
+    assert.ok(html.includes('for="'+id+'"'),'missing label '+id);
+    assert.ok(html.includes('id="'+id+'"'),'missing field '+id);
+  }
+  assert.match(html,/if\(role\.value==='dm'\)/);
+  assert.match(html,/data\.accessibilityConcerns/);
+  assert.match(html,/data\.encounterBalance/);
+  assert.match(html,/data\.rulesAmbiguities/);
+});
