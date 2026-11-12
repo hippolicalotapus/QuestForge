@@ -30,3 +30,21 @@ test('local store refuses paths outside its configured private directory',async(
   assert.throws(()=>createLocalFeedbackStore({filePath:join(dir,'private.jsonl')}),/private storage directory/);
  } finally {await rm(dir,{recursive:true,force:true});}
 });
+
+test('local store rejects symlinked directory escape',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-feedback-'));
+ const outside=await mkdtemp(join(tmpdir(),'questforge-outside-'));
+ try {
+   await symlink(outside,join(dir,'escape'));
+   const save=createLocalFeedbackStore({filePath:join(dir,'escape','records.jsonl'),privateDirectory:dir});
+   await assert.rejects(save({feedback:{kind:'player'},contact:null}),/escapes private root/);
+ } finally {await rm(dir,{recursive:true,force:true});await rm(outside,{recursive:true,force:true});}
+});
+test('local store rejects group-readable storage directories',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'questforge-feedback-'));
+ try {
+   await chmod(dir,0o755);
+   const save=createLocalFeedbackStore({filePath:join(dir,'records.jsonl'),privateDirectory:dir});
+   await assert.rejects(save({feedback:{kind:'player'},contact:null}),/directory must be private/);
+ } finally {await rm(dir,{recursive:true,force:true});}
+});
