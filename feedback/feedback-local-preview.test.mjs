@@ -63,3 +63,11 @@ test('local preview rejects non-loopback Host headers',async()=>{
  await route({method:'POST',url:'/api/feedback',headers:{host:'attacker.example:3000'}},res);
  assert.equal(res.status,403);assert.equal(called,0);
 });
+
+test('real HTTP-shaped requests without Host are rejected',async()=>{
+ let called=0;
+ const route=createLocalPreviewRouter({submit:()=>{called++;}});
+ const res={writeHead(code){this.status=code;},end(body){this.body=body;}};
+ await route({method:'POST',url:'/api/feedback',headers:{}},res);
+ assert.equal(res.status,403);assert.equal(called,0);
+});
