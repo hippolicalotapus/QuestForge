@@ -24,3 +24,11 @@ test('reports unavailable storage without false success',async()=>{
  const handle=createFeedbackHandler({save:async()=>{throw Error('offline')}});
  assert.equal((await handle(req())).status,503);
 });
+
+test('rejects malformed request envelopes and unsafe size configuration',async()=>{
+  assert.throws(()=>createFeedbackHandler({save:async()=> 'ok',maxBytes:0}),RangeError);
+  assert.throws(()=>createFeedbackHandler({save:async()=> 'ok',maxBytes:Infinity}),RangeError);
+  const handle=createFeedbackHandler({save:async()=> 'ok'});
+  assert.equal((await handle(null)).status,400);
+  assert.equal((await handle([])).status,400);
+});
