@@ -11,6 +11,8 @@ function createFeedbackHandler({save, maxBytes = 16_384, rateLimit = createRateL
     if (method !== 'POST') return {status:405, body:{ok:false,error:'Method not allowed'}};
     if (typeof contentType !== 'string' || !/^application\/json(?:\s*;|$)/i.test(contentType)) return {status:415,body:{ok:false,error:'JSON required'}};
     if (typeof body !== 'string' || Buffer.byteLength(body,'utf8') > maxBytes) return {status:413,body:{ok:false,error:'Request too large'}};
+    // The server adapter must supply this identity from trusted connection metadata.
+    // Never accept a client-controlled JSON field as the identity.
     const key = request.rateLimitKey;
     if (typeof key !== 'string' || !key.trim() || key.length > 256) return {status:400,body:{ok:false,error:'Missing request rate-limit identity'}};
     let quota;
@@ -23,6 +25,7 @@ function createFeedbackHandler({save, maxBytes = 16_384, rateLimit = createRateL
     }
     let parsed;
     try { parsed=JSON.parse(body); } catch { return {status:400,body:{ok:false,error:'Malformed JSON'}}; }
+    if (parsed && typeof parsed === 'object' && Object.hasOwn(parsed,'rateLimitKey')) return {status:400,body:{ok:false,error:'Unexpected client identity field'}};
     const result=await submit(parsed);
     if (!result.ok) return {status:result.error.startsWith('Submission could not') || result.error.startsWith('Storage did not') ? 503 : 400,body:result};
     return {status:201,body:result};
