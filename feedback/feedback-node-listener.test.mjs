@@ -28,3 +28,13 @@ test('rejects oversized or malformed Content-Length without reading body',async(
    req.headers['content-length']=length;const res=response();await listener(req,res);assert.equal(res.status,400);assert.equal(reads,0);
  }
 });
+
+test('HTTP adapter uses socket identity for rate-limit isolation',async()=>{
+ let writes=0;
+ const {createRateLimiter}=await import('./feedback-rate-limit.mjs');
+ const listener=createNodeFeedbackListener({save:async()=>{writes++;return 'receipt'},rateLimit:createRateLimiter({limit:1,windowMs:60_000,now:()=>100})});
+ const first=response();await listener(request(valid,'192.0.2.1'),first);assert.equal(first.status,201);
+ const blocked=response();await listener(request(valid,'192.0.2.1'),blocked);assert.equal(blocked.status,429);
+ const separate=response();await listener(request(valid,'192.0.2.2'),separate);assert.equal(separate.status,201);
+ assert.equal(writes,2);
+});
