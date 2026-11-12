@@ -33,3 +33,11 @@ test('local preview refuses to silently serve a broken form transformation',asyn
  assert.doesNotMatch(page.body,/Validate preview \(does not send\)/);
  assert.match(page.body,/async event=>/);
 });
+
+test('local form has async submit handler and no offline success message',async()=>{
+ const route=createLocalPreviewRouter({submit:()=>{}});
+ const page=await request(route,'GET','/');
+ assert.match(page.body,/form\.addEventListener\('submit',async event=>/);
+ assert.doesNotMatch(page.body,/Valid preview\. No information was saved or sent/);
+ assert.match(page.body,/submitLocal\(data\)/);
+});
