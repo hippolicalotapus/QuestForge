@@ -7,7 +7,7 @@ function createLocalFeedbackStore({filePath}={}) {
   if(typeof filePath!=='string'||!filePath.trim()) throw new TypeError('A private feedback file path is required');
   return async function save({feedback,contact}) {
     const receipt=randomUUID();
-    const line=JSON.stringify({receipt,receivedAt:new Date().toISOString(),feedback,contact})+'\\n';
+    const line=JSON.stringify({receipt,receivedAt:new Date().toISOString(),feedback,contact})+'\n';
     const flags=constants.O_WRONLY|constants.O_APPEND|constants.O_CREAT|(constants.O_NOFOLLOW||0);
     const file=await open(filePath,flags,0o600);
     try {
