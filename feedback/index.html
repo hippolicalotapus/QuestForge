@@ -21,6 +21,7 @@
 <button type="submit">Validate preview (does not send)</button><p id="result" role="status" aria-live="polite"></p></form></main>
 <script type="module">
 import {validateFeedback} from './feedback-validation.mjs';
+import {collectFeedback} from './feedback-form-data.mjs';
 const form=document.getElementById('feedbackForm');
 const role=document.getElementById('kind');
 const dm=document.getElementById('dmFields');
@@ -32,12 +33,7 @@ function syncRole(){const isDM=role.value==='dm';dm.hidden=!isDM;for(const field
 role.addEventListener('change',()=>{syncRole();document.getElementById('result').textContent='';});syncRole();
 form.addEventListener('submit',event=>{
  event.preventDefault();
- const data={kind:role.value,adventureId:form.elements.adventureId.value,version:form.elements.version.value,consentToContact:form.elements.consentToContact.checked};
- if(consent.checked && contact.value)data.contact=contact.value;
- if(form.elements.clarity.value)data.clarity=Number(form.elements.clarity.value);
- if(form.elements.suggestions.value)data.suggestions=form.elements.suggestions.value;
- if(form.elements.accessibilityConcerns.value)data.accessibilityConcerns=form.elements.accessibilityConcerns.value;
- if(role.value==='dm'){data.partySize=Number(form.elements.partySize.value);data.partyLevel=Number(form.elements.partyLevel.value);if(form.elements.encounterBalance.value)data.encounterBalance=Number(form.elements.encounterBalance.value);if(form.elements.rulesAmbiguities.value)data.rulesAmbiguities=form.elements.rulesAmbiguities.value;}
+ const data=collectFeedback(form);
  const result=validateFeedback(data);
  document.getElementById('result').textContent=result.ok?'Valid preview. No information was saved or sent.':result.error;
 });
