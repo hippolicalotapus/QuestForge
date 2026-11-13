@@ -12,3 +12,12 @@ test('empty current batch requests more feedback',()=>{
  const result=playtestReviewActions([item(5)],[],'voynich-playtest');
  assert.ok(result.actions.some(a=>a.action==='collect-feedback'));
 });
+
+test('newly rated criterion requires human baseline review',()=>{
+ const previous=[item(4)];
+ const current=[{...item(4), pacing:3}];
+ const result=playtestReviewActions(previous,current,'voynich-playtest');
+ assert.ok(result.actions.some(a=>a.criterion==='pacing'&&a.action==='establish-baseline'&&a.requiresHumanReview));
+ assert.equal(result.approvedForPublication,false);
+ assert.equal(result.containsContactDetails,false);
+});
