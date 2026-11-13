@@ -74,6 +74,17 @@ def run(site):
                         page.locator("#forgeLibraryImport").set_input_files(str(backup_path))
                         page.once("dialog", lambda dialog: dialog.accept())
                         page.get_by_role("button", name="Import Library Backup").click()
+                        page.wait_for_function(
+                            """() => {
+                                const raw = localStorage.getItem('qf-adventure-library-v1');
+                                if (!raw) return false;
+                                try {
+                                    const entries = JSON.parse(raw);
+                                    return Array.isArray(entries) && entries.length === 1
+                                        && entries[0].draft?.title === 'Smoke Test Adventure';
+                                } catch { return false; }
+                            }"""
+                        )
                         restored = page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")
                         assert len(restored) == 1 and restored[0]["draft"]["title"] == "Smoke Test Adventure", "Valid backup did not restore"
                         page.locator("#forgeLibraryImport").set_input_files({
@@ -82,7 +93,7 @@ def run(site):
                             "buffer": b'{"schema":"wrong","entries":[]}'
                         })
                         page.get_by_role("button", name="Import Library Backup").click()
-                        assert "Not a compatible" in page.locator("#forgeStatus").inner_text()
+                        page.locator("#forgeStatus").get_by_text("Not a compatible", exact=False).wait_for()
                         assert len(page.evaluate("JSON.parse(localStorage.getItem('qf-adventure-library-v1'))")) == 1
                         # Suppress the native dialog so Chromium can inspect the prepared print layout.
                         page.evaluate("window.print = () => {}")
