@@ -1,0 +1,73 @@
+name: QuestForge static smoke checks
+on:
+  push:
+    branches: [main, 'dev/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check homepage structure and JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import re
+          import subprocess
+          import tempfile
+
+          class Page(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.ids = set()
+                  self.buttons = 0
+                  self.scripts = []
+                  self._in_script = False
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if 'id' in attrs:
+                      assert attrs['id'] not in self.ids, f"Duplicate ID: {attrs['id']}"
+                      self.ids.add(attrs['id'])
+                  if tag == 'button':
+                      self.buttons += 1
+                  if tag == 'script' and 'src' not in attrs:
+                      self._in_script = True
+              def handle_endtag(self, tag):
+                  if tag == 'script':
+                      self._in_script = False
+              def handle_data(self, data):
+                  if self._in_script:
+                      self.scripts.append(data)
+
+          html = Path('index.html').read_text(encoding='utf-8')
+          page = Page()
+          page.feed(html)
+          required = {'welcome', 'scroll', 'map', 'adventure', 'characters',
+                      'campaign', 'studio', 'guild', 'feedback', 'market',
+                      'charName', 'charStatus', 'campaignStatus'}
+          assert required <= page.ids, f"Missing IDs: {required - page.ids}"
+          assert page.buttons >= 5, 'Navigation controls missing'
+          assert '<meta name="viewport"' in html, 'Mobile viewport missing'
+          assert 'role="status"' in html, 'Status announcement missing'
+          assert page.scripts, 'Inline application script missing'
+          assert 'function importProfile(event,kind)' in html, 'JSON import handler missing'
+          assert 'file.size>1024*1024' in html, 'Import size guard missing'
+          assert 'Unsupported character role.' in html, 'Character role validation missing'
+          assert html.count('type="file"') == 2, 'Character and campaign file pickers required'
+          assert 'href="#main-content"' in html, 'Keyboard skip link missing'
+          assert 'id="main-content"' in html, 'Main landmark target missing'
+          assert 'function show(id){if(!$(id))return;' in html, 'Unknown panel guard missing'
+          assert "$(id).focus({preventScroll:true})" in html, 'Panel focus management missing'
+          with tempfile.TemporaryDirectory() as folder:
+              path = Path(folder) / 'app.js'
+              path.write_text('\n'.join(page.scripts), encoding='utf-8')
+              subprocess.run(['node', '--check', str(path)], check=True)
+          print('QuestForge static smoke checks passed')
+          PY
+
+      - name: Run feedback validation unit tests
+        run: node --test feedback/*.test.mjs

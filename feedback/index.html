@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>QuestForge Playtest Feedback — Offline Preview</title>
+<style>body{font:1rem/1.5 system-ui,sans-serif;background:#16151a;color:#f7f3e8;max-width:44rem;margin:2rem auto;padding:0 1rem}fieldset{border:1px solid #a18d69;border-radius:.6rem;margin:1rem 0;padding:1rem}label{display:block;margin:.8rem 0}input,select,textarea,button{font:inherit;max-width:100%;box-sizing:border-box}input,select,textarea{display:block;width:100%;padding:.55rem;background:#fff;color:#111}button{padding:.7rem 1.2rem;cursor:pointer}a{color:#f0cf84}#result{min-height:2rem}small{display:block}</style></head><body>
+<main><h1>QuestForge Playtest Feedback</h1><p><strong>Offline preview only.</strong> No feedback is transmitted or saved. Do not print QR codes pointing here.</p>
+<form id="feedbackForm" novalidate>
+<label for="kind">Your role<select id="kind" name="kind" required><option value="player">Player</option><option value="dm">Dungeon Master (DM)</option></select></label>
+<label for="adventureId">Adventure identifier<input id="adventureId" name="adventureId" value="voynich-playtest" required maxlength="80"></label>
+<label for="version">Adventure version<input id="version" name="version" value="1.0" required maxlength="32"></label>
+<fieldset><legend>Experience</legend>
+<label for="clarity">Clarity (1–5)<select id="clarity" name="clarity"><option value="">Prefer not to rate</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+<label for="suggestions">Suggestions<textarea id="suggestions" name="suggestions" maxlength="2000" rows="5"></textarea></label>
+<label for="accessibilityConcerns">Accessibility concerns<textarea id="accessibilityConcerns" name="accessibilityConcerns" maxlength="2000" rows="3"></textarea></label>
+</fieldset>
+<fieldset id="dmFields" hidden><legend>Dungeon Master session</legend>
+<label for="partySize">Party size<input id="partySize" name="partySize" type="number" min="1" max="30" step="1"></label>
+<label for="partyLevel">Party level<input id="partyLevel" name="partyLevel" type="number" min="1" max="20" step="1"></label>
+<label for="encounterBalance">Encounter balance (1–5)<select id="encounterBalance" name="encounterBalance"><option value="">Prefer not to rate</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+<label for="rulesAmbiguities">Rules ambiguities<textarea id="rulesAmbiguities" name="rulesAmbiguities" maxlength="2000" rows="3"></textarea></label>
+</fieldset>
+<fieldset><legend>Optional follow-up</legend><label for="consentToContact"><input id="consentToContact" name="consentToContact" type="checkbox" style="display:inline;width:auto"> I agree to be contacted about my feedback</label><label for="contact">Email (only if opted in)<input id="contact" name="contact" type="email" autocomplete="email" maxlength="254" disabled></label></fieldset>
+<button type="submit">Validate preview (does not send)</button><p id="result" role="status" aria-live="polite"></p></form></main>
+<script type="module">
+import {validateFeedback} from './feedback-validation.mjs';
+import {collectFeedback} from './feedback-form-data.mjs';
+const form=document.getElementById('feedbackForm');
+const role=document.getElementById('kind');
+const dm=document.getElementById('dmFields');
+const consent=form.elements.consentToContact;
+const contact=form.elements.contact;
+function syncContact(){contact.disabled=!consent.checked;if(!consent.checked)contact.value='';}
+consent.addEventListener('change',()=>{syncContact();document.getElementById('result').textContent='';});syncContact();
+function syncRole(){const isDM=role.value==='dm';dm.hidden=!isDM;for(const field of dm.querySelectorAll('input,select,textarea'))field.disabled=!isDM;for(const field of dm.querySelectorAll('input[type=number]'))field.required=isDM;}
+role.addEventListener('change',()=>{syncRole();document.getElementById('result').textContent='';});syncRole();
+form.addEventListener('submit',event=>{
+ event.preventDefault();
+ const data=collectFeedback(form);
+ const result=validateFeedback(data);
+ document.getElementById('result').textContent=result.ok?'Valid preview. No information was saved or sent.':result.error;
+});
+</script></body></html>
