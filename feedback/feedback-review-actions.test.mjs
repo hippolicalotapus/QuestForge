@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {playtestReviewActions} from './feedback-review-actions.mjs';
-const item=clarity=>({kind:'player',adventureId:'voynich-playtest',version:'v1',clarity,contact:'fictional@example.org'});
+const item=clarity=>({kind:'player',adventureId:'voynich-playtest',version:'v1',clarity,contact:'fictional@example.org',consentToContact:true});
 test('declining ratings prompt human review without publishing',()=>{
  const result=playtestReviewActions([item(5)],[item(2)],'voynich-playtest');
  assert.deepEqual(result.actions,[{criterion:'clarity',action:'review-decline',requiresHumanReview:true}]);
