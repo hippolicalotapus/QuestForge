@@ -40,7 +40,7 @@ Use these dry-run paths before inviting players. They are facilitator rehearsals
 |---|---|---|---|
 | A — Puzzle solvers | Plant seed; water roots; return leaf token; visit fountain before Mara | Open gate after one minute; clear hall; keeper accepts token; reveal fountain note only at fountain | Journal recovered, fountain clue earned, Mara pays 20 gp when journal returned |
 | B — Failed rolls | Fail gate Athletics; rush roots and fail Dexterity; fail keeper Persuasion | Side latch yields after noisy extra minute; character falls prone without automatic damage; keeper accepts protective wrapping | No dead end, no forced combat, journal returned for 20 gp |
-| C — Careful negotiators | Search for pouch; cross hall at half speed; keep token; promise to protect journal; return to Mara first | Supply note and seed; safe crossing; keeper permits no-roll protective plan; Mara pays and identifies fountain | Optional fountain epilogue remains available after payment |
+| C — Careful negotiators | Search for pouch; cross hall at half speed; water the trough to reveal the token; keep token; promise to protect journal; return to Mara first | Supply note and seed; safe crossing; reveal token only after watering; keeper permits no-roll protective plan; Mara pays and identifies fountain | Optional fountain epilogue remains available after payment |
 | D — Time-limited group | Miss initial seed clue; skip trough; refuse combat; need to end by 60 minutes | Reveal gardener note; permit careful crossing; keeper steps aside after promise; Mara points out emblem | Journal and 20 gp resolved; fountain hook can close with an invitation, not a forced extra scene |
 
 **Rehearsal pass criteria:** Every path reaches journal recovery without a mandatory successful die roll, avoids automatic combat, preserves the player's choice about the leaf token, and never reveals the first-frost message before the fountain. Record any mismatch as a manuscript or handout defect before inviting players. These paths do not establish encounter balance, print quality, or real-user usability.
@@ -98,3 +98,4 @@ Before printing, verify both map titles identify their intended audience and tha
 - [ ] Copyright, privacy, and publication approval recorded
 
 This packet is a private design artifact only. No website deployment, sales, registration, or checkout is authorized.
+
