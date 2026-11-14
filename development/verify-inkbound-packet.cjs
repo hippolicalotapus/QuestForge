@@ -7,6 +7,8 @@ const dm = fs.readFileSync(path.join(root, "inkbound-threshold-dm-playtest-packe
 const player = fs.readFileSync(path.join(root, "inkbound-threshold-player-handout-01.md"), "utf8");
 const story = fs.readFileSync(path.join(root, "voynich-level1-encounter-draft.md"), "utf8");
 const tests = [
+  ["Level-1 combat is explicitly optional and calibrated", story.includes("one creature only") && story.includes("not evidence of balanced combat") && story.includes("do not use the scarecrow monster stat block")],
+  ["Keeper escalation is noncombat-first", story.includes("backs away and repeats the choice before initiative") && story.includes("Combat is not needed")],
   ["Level 1 and DM packet", dm.includes("Level 1") && dm.includes("Dungeon Master")],
   ["Gate clue consistent", player.includes("ONLY WHAT GROWS MAY PASS") && story.includes("Only what grows may pass")],
   ["Fountain clue consistent", player.includes("PETALS   P O I N T") || (player.includes("P E T A L S") && story.includes("PETALS POINT TO WATER"))],
