@@ -33,6 +33,7 @@ const tests = [
 ["DM clue labels follow mapped objects",dm.includes('<text x="340" y="407">Seed pouch</text>')&&dm.includes('<text x="350" y="605">Water trough + leaf token</text>')&&dm.includes('<text x="775" y="475">Journal</text>')],
 ["player map uses readable outlined room labels",player.includes('paint-order="stroke fill"')&&player.includes('font-size="21"')],
 ["DM map uses readable outlined room labels",dm.includes('paint-order="stroke fill"')&&dm.includes('font-size="21"')],
+["map labels have opaque backing to remain readable in SVG renderers", [player,dm].every(x=>x.includes('<rect x="268" y="338" width="270" height="35" fill="#eee6d1"')&&x.includes('<rect x="278" y="443" width="270" height="35" fill="#eee6d1"'))],
 ["DM sheet preserves guaranteed reward regardless of fountain order",quick.includes("Mara pays 20 gp total on journal return whether the fountain is visited before or afterward")],
 ["DM sheet preserves noncombat keeper recovery after failed Persuasion",quick.includes("protecting the journal after failed Persuasion allows recovery without combat")],
 ["DM sheet preserves 60 and 90 minute pacing",quick.includes("For a 60-minute session")&&quick.includes("For 90 minutes")],
