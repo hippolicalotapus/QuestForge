@@ -17,6 +17,8 @@ const tests = [
   ["No forced combat", dm.includes("not automatic initiative")],
   ["Gate failure remains fail-forward in both sources", story.includes("noisy second attempt") && dm.includes("noisy second attempt")],
   ["Journal reward never depends on fountain visit order", story.includes("whether or not they have visited the fountain") && dm.includes("whether the party visits the fountain before or after receiving payment")],
+  ["Four rehearsal paths documented", ["A — Puzzle solvers","B — Failed rolls","C — Careful negotiators","D — Time-limited group"].every(x => dm.includes(x))],
+  ["60 and 90 minute pacing controls", dm.includes("60-minute session") && dm.includes("90-minute session")],
   ["No automatic hazard damage", dm.includes("no automatic damage")],
   ["Player and DM map separation", dm.includes("Player map") && dm.includes("DM map")],
   ["Private release gate", dm.includes("not for sale") && story.includes("NOT FOR PUBLICATION")],
