@@ -11,6 +11,7 @@ const tests = [
 ["both maps are SVG", [player,dm].every(x=>x.startsWith("<svg")&&x.trim().endsWith("</svg>"))],
 ["four public locations match", ["GATE / VESTIBULE","ROOTBOUND HALL","CELLAR","VILLAGE FOUNTAIN"].every(x=>player.includes(x)&&dm.includes(x))],
 ["DM map includes keyed notes",dm.includes("KEYED DM NOTES")],
+["DM map note panel has bottom breathing room",(()=>{const panel=dm.match(/<rect x="650" y="(\d+)" width="470" height="(\d+)" fill="#fff9e9"/);const last=dm.match(/<text x="676" y="(\d+)">4 • Five-petal fountain; hidden compartment<\/text>/);return !!panel&&!!last&&Number(panel[1])+Number(panel[2])-Number(last[1])>=20})()],
 ["player map hides DM notes",!player.includes("KEYED DM NOTES")],
 ["player map hides secret item locations",!/(Seed pouch|leaf token|hidden compartment|Journal)/i.test(player)],
 ["DM map keeps secret locations",dm.includes("Seed pouch")&&dm.includes("leaf token")],
