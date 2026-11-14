@@ -22,6 +22,17 @@
 
 **Journal and reward:** The five-petaled flower is a botanical clue, **not a cipher**. “PETALS POINT TO WATER” refers to the village fountain. Investigation DC 10 helps; players can infer the answer without rolling. Mara pays **20 gp total** when the journal is returned, whether the party visits the fountain before or after receiving payment. If they return first, Mara identifies the five-petal fountain emblem and offers the fountain visit as an optional epilogue. Do not gate the reward or the lead behind a successful roll. The fountain compartment contains an empty vial and “The spring wakes at first frost.”
 
+## Ready-to-run keeper conversation (private DM material)
+When the characters enter the cellar, the keeper steps between them and the journal. Read aloud: *A straw-stuffed figure straightens in the damp gloom. Its hands tremble around the book. “Are you here to take the last thing that still grows?”*
+
+**First exchange:** Ask the players what they want. If they mention Mara, the keeper asks, *“Will she keep its pages dry?”* An honest promise to protect the journal opens the DC 11 Persuasion approach; do not require a roll if the players present the brass leaf token and offer it back. Returning the token is a choice: the players may instead keep it for advantage on one later botanical-clue interpretation check, as described in the adventure draft. Neither choice is mandatory to progress.
+
+**If the players fail Persuasion:** The keeper does not attack automatically. It demands that the party wrap the journal against the rain using cloth, a cloak, or another plausible covering. Meeting that request earns its trust without a second roll. If the players cannot provide a covering, they may offer to carry the book carefully and show how; accept a credible alternative. Failure costs conversation time, not access to the journal.
+
+**If the players threaten the keeper:** Warn them clearly that it is frightened rather than aggressive. It retreats behind the workbench and offers one last chance to talk. If players insist on combat, pause to use only a separately verified legal, level-appropriate combat reference; this packet does not certify a balanced encounter. The keeper disengages or yields when the journal is protected. Never require defeating it to obtain the book.
+
+**If the group runs short of time:** After two exchanges, the keeper asks for a simple promise to keep the journal dry, then steps aside. Move directly to the journal clue. Do not reveal the fountain compartment's first-frost note before the party reaches the fountain.
+
 ## Location key for professional maps
 1. Gate: three emblems, seed pouch, gardener's note, alternate side latch.
 2. Rootbound hall: visible roots, dry trough, watering can, brass leaf token.
