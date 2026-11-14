@@ -19,14 +19,5 @@ A final line has been added in another hand:
 > The spring wakes at first frost.
 
 ### For players
-This is an in-world handout. Do not read the Dungeon Master's notes until after your session.
+This is an in-world handout. The greenhouse plate is given at the gate; the recovered journal leaf is given only after the journal is found. Do not read the journal leaf early.
 
----
-
-## Dungeon Master (DM) assembly and quality notes — remove from player print
-- Give players the greenhouse plate text during Scene 1.
-- Give the recovered journal leaf only after they obtain the journal in Scene 3.
-- The five-petal emblem points to the village fountain; the inscription is an overt clue, **not** a substitution cipher. The adventure draft should be corrected accordingly.
-- Do not add a QR code until separate player and DM feedback endpoints are working and tested.
-- Replace this text-only prototype with a professionally laid-out original print handout before publication.
-- No public release, sale, signup, or payment is authorized.
