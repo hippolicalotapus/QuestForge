@@ -67,6 +67,13 @@ At the start, invite players to name content boundaries privately or aloud witho
 ## First-playtest readiness gate
 Before inviting players, the Dungeon Master should verify that the four mapped locations match the printed handouts, that the journal leaf remains concealed until recovery, and that the optional combat reference is legal and suitable for four Level 1 characters. If that combat reference has not been reviewed, use negotiation and surrender as the default and do not present the encounter as balance-tested. Keep the session private and do not share the DM map or source handout with players.
 
+## Map and encounter table-readiness checklist (private)
+Before printing, verify both map titles identify their intended audience and that the gate, hall, cellar, and fountain remain in matching positions. The three ceramic pots must be visible at the gate; the broken-glasshouse roof detail must not conceal labels or suggest an inaccessible doorway. Check the map at **100% print size**, not only on a phone screen. Keep the DM-only seed pouch, token, journal and compartment annotations out of the player map.
+
+**Dry-run the four routes without dice:** seed planted; noisy side latch after failure; careful crossing with no fall; keeper accepts a journal-protection promise after failed Persuasion. Then rehearse a rushing character failing the DC 11 Dexterity save: they fall prone but take no automatic damage. The party still recovers the journal and earns **20 gp total** regardless of fountain order. Track time and spotlight opportunities for all four characters; flag any mandatory roll or combat as a defect.
+
+**Optional combat gate:** do not substitute the full scarecrow monster. If the DM has not reviewed a legal, level-appropriate single-creature reference and its risks, skip combat and use the keeper's negotiation or retreat branches. Do not mark combat balance complete until actual supervised level-1 testing supports it.
+
 ## DM observation record (manual; no data collection)
 | Check | Notes |
 |---|---|
