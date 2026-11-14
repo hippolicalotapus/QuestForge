@@ -30,7 +30,7 @@ const tests = [
 ["mobile handout styles cannot override print margins",handout.indexOf("@media(max-width:600px)")>=0&&handout.indexOf("@media print")>handout.indexOf("@media(max-width:600px)")],
 ["player handout retains letter-sized print",handout.includes("@page{size:letter;margin:.5in}")],
 ["DM handout retains letter-sized print",quick.includes("@page{size:letter;margin:.5in}")],
-["DM clue labels follow mapped objects",dm.includes('<text x="340" y="385">Seed pouch</text>')&&dm.includes('<text x="350" y="605">Water trough + leaf token</text>')&&dm.includes('<text x="775" y="475">Journal</text>')],
+["DM clue labels follow mapped objects",dm.includes('<text x="340" y="403">Seed pouch</text>')&&dm.includes('<text x="350" y="605">Water trough + leaf token</text>')&&dm.includes('<text x="775" y="475">Journal</text>')],
 ["player map uses readable backed room labels",player.includes('<rect x="268" y="338"')&&player.includes('font-size="21"')],
 ["DM map uses readable backed room labels",dm.includes('<rect x="268" y="338"')&&dm.includes('font-size="21"')],
 ["map labels have opaque backing to remain readable in SVG renderers", [player,dm].every(x=>x.includes('<rect x="268" y="338" width="270" height="35" fill="#eee6d1"')&&x.includes('<rect x="278" y="443" width="270" height="35" fill="#eee6d1"'))],
