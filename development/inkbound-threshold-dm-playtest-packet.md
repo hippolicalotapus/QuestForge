@@ -50,6 +50,8 @@ Before inviting players, the Dungeon Master should verify that the four mapped l
 | Was negotiation clearly possible? | |
 | Were all characters able to contribute? | |
 | Was fountain clue understandable without rolling? | |
+| Did the party receive 20 gp regardless of fountain visit order? | |
+| Did a failed gate latch check cause delay rather than a dead end? | |
 | Rules/balance problems or accessibility barriers | |
 | Consent to contact for future tests (optional; do not record in public repo) | |
 
