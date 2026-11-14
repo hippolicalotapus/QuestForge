@@ -35,6 +35,7 @@ const tests = [
 ["player map uses readable backed room labels",player.includes('<rect x="268" y="338"')&&player.includes('font-size="21"')],
 ["DM map uses readable backed room labels",dm.includes('<rect x="268" y="338"')&&dm.includes('font-size="21"')],
 ["map labels have opaque backing to remain readable in SVG renderers", [player,dm].every(x=>x.includes('<rect x="268" y="338" width="270" height="35" fill="#eee6d1"')&&x.includes('<rect x="278" y="443" width="270" height="35" fill="#eee6d1"'))],
+["DM sheet rules out unsafe level-1 scarecrow combat",quick.includes("A full scarecrow stat block is not appropriate")&&quick.includes("combat is optional")&&quick.includes("separate balance and rights review")],
 ["DM sheet preserves guaranteed reward regardless of fountain order",quick.includes("Mara pays 20 gp total on journal return whether the fountain is visited before or afterward")],
 ["DM sheet preserves noncombat keeper recovery after failed Persuasion",quick.includes("protecting the journal after failed Persuasion allows recovery without combat")],
 ["DM sheet preserves 60 and 90 minute pacing",quick.includes("For a 60-minute session")&&quick.includes("For 90 minutes")],
