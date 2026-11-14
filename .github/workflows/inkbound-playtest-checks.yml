@@ -1,0 +1,25 @@
+name: Inkbound Threshold private playtest checks
+on:
+  push:
+    branches:
+      - feature/voynich-playtest-readiness-20261113
+    paths:
+      - development/verify-inkbound-packet.cjs
+      - development/voynich-level1-encounter-draft.md
+      - development/inkbound-threshold-dm-playtest-packet.md
+      - development/inkbound-threshold-player-handout-01.md
+      - .github/workflows/inkbound-playtest-checks.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  manuscript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check development/verify-inkbound-packet.cjs
+      - run: node development/verify-inkbound-packet.cjs
