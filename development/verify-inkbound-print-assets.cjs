@@ -29,7 +29,12 @@ const tests = [
 ["player journal stays on a separate printed page",handout.includes("break-before:page")&&handout.includes("Give this page only when the journal is recovered")],
 ["mobile handout styles cannot override print margins",handout.indexOf("@media(max-width:600px)")>=0&&handout.indexOf("@media print")>handout.indexOf("@media(max-width:600px)")],
 ["player handout retains letter-sized print",handout.includes("@page{size:letter;margin:.5in}")],
-["DM handout retains letter-sized print",quick.includes("@page{size:letter;margin:.5in}")]
+["DM handout retains letter-sized print",quick.includes("@page{size:letter;margin:.5in}")],
+["DM sheet preserves guaranteed reward regardless of fountain order",quick.includes("Mara pays 20 gp total on journal return whether the fountain is visited before or afterward")],
+["DM sheet preserves noncombat keeper recovery after failed Persuasion",quick.includes("protecting the journal after failed Persuasion allows recovery without combat")],
+["DM sheet preserves 60 and 90 minute pacing",quick.includes("For a 60-minute session")&&quick.includes("For 90 minutes")],
+["DM sheet never reveals frost clue before fountain exploration",quick.includes("reveal the first-frost note only if explored")],
+["DM sheet preserves failed-latch fail-forward",quick.includes("failed DC 12 latch attempt opens on a noisy second attempt")]
 ];
 for(const [name,ok] of tests)assert.ok(ok,name);
 console.log("PASS: "+tests.length+" map confidentiality and print-readiness source checks");
