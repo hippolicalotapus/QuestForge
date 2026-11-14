@@ -12,6 +12,8 @@ const tests = [
   ["Fountain clue consistent", player.includes("PETALS   P O I N T") || (player.includes("P E T A L S") && story.includes("PETALS POINT TO WATER"))],
   ["Botanical clue is explicitly not a cipher", story.includes("botanical clue") && dm.includes("not a cipher")],
   ["Noncombat resolution", story.includes("Persuasion") && dm.includes("conversation")],
+  ["Keeper failed persuasion has a no-roll recovery", story.includes("If Persuasion fails") && dm.includes("If the players fail Persuasion")],
+  ["Keeper leaf token is optional and usable later", story.includes("Returning the leaf token is optional") && dm.includes("Returning the token is a choice")],
   ["No forced combat", dm.includes("not automatic initiative")],
   ["Gate failure remains fail-forward in both sources", story.includes("noisy second attempt") && dm.includes("noisy second attempt")],
   ["Journal reward never depends on fountain visit order", story.includes("whether or not they have visited the fountain") && dm.includes("whether the party visits the fountain before or after receiving payment")],
