@@ -21,6 +21,7 @@ const tests = [
 ["DM sheet private",quick.includes("DUNGEON MASTER ONLY")&&quick.includes("not give to players")],
 ["DM sheet avoids clipped print content",quick.includes("box-sizing:border-box")&&quick.includes("overflow-wrap:break-word")&&quick.includes("max-width:none")],
 ["DM print tables preserve row boundaries",quick.includes("tr{break-inside:avoid}")&&quick.includes("thead{display:table-header-group}")],
+["player handout has exactly two separately printable sheets",handout.match(/<main class="sheet">/g)?.length===2&&handout.includes('</main><main class="sheet">')],
 ["first player sheet does not reveal recovered journal clue",(()=>{const first=handout.split('</main><main class="sheet">')[0];return !first.includes("PETALS POINT TO WATER")&&!first.includes("The spring wakes at first frost.")})()],
 ["printable player handouts contain no DM assembly notes",!handout.includes("DM) assembly")&&!handout.includes("remove from player print")],
 ["player journal stays on a separate printed page",handout.includes("break-before:page")&&handout.includes("Give this page only when the journal is recovered")],
