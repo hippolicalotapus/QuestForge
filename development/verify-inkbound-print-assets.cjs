@@ -18,6 +18,7 @@ const tests = [
 ["player handout does not expose DM directions",!/(DC 11|DC 12|Dungeon Master ONLY|KEYED DM NOTES)/i.test(handout)],
 ["print layouts supplied",handout.includes("@media print")&&quick.includes("@media print")],
 ["player clue consistent",handout.includes("PETALS POINT TO WATER")],
+["fountain discovery is not spoiled in printable handout",!handout.includes("The spring wakes at first frost.")],
 ["DM sheet private",quick.includes("DUNGEON MASTER ONLY")&&quick.includes("not give to players")],
 ["DM sheet avoids clipped print content",quick.includes("box-sizing:border-box")&&quick.includes("overflow-wrap:break-word")&&quick.includes("max-width:none")],
 ["DM print tables preserve row boundaries",quick.includes("tr{break-inside:avoid}")&&quick.includes("thead{display:table-header-group}")],
