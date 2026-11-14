@@ -7,6 +7,8 @@ const dm = fs.readFileSync(path.join(root, "inkbound-threshold-dm-playtest-packe
 const player = fs.readFileSync(path.join(root, "inkbound-threshold-player-handout-01.md"), "utf8");
 const story = fs.readFileSync(path.join(root, "voynich-level1-encounter-draft.md"), "utf8");
 const tests = [
+  ["DM rehearsal checks real print-size map readability", dm.includes("100% print size") && dm.includes("three ceramic pots")],
+  ["DM rehearses no-roll paths and avoids unsafe scarecrow", dm.includes("Dry-run the four routes without dice") && dm.includes("do not substitute the full scarecrow monster")],
   ["Level-1 combat is explicitly optional and calibrated", story.includes("one creature only") && story.includes("not evidence of balanced combat") && story.includes("do not use the scarecrow monster stat block")],
   ["Keeper escalation is noncombat-first", story.includes("backs away and repeats the choice before initiative") && story.includes("Combat is not needed")],
   ["Level 1 and DM packet", dm.includes("Level 1") && dm.includes("Dungeon Master")],
