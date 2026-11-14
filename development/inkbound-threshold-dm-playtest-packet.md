@@ -20,7 +20,7 @@
 
 **Keeper:** Begin with conversation, not automatic initiative. The guardian accepts the leaf token or DC 11 Persuasion after hearing the request. If players initiate combat, use a legally sourced and separately reviewed level-appropriate creature stat block; the provisional crawling-claw stand-in has **not** been balanced or rights-checked for publication. Do not reproduce any third-party stat block in this packet. Guardian stops fighting if journal is unharmed.
 
-**Journal:** The five-petaled flower is a botanical clue, **not a cipher**. “PETALS POINT TO WATER” refers to the village fountain. Investigation DC 10 helps; players can infer the answer without rolling. Fountain compartment contains an empty vial and “The spring wakes at first frost.”
+**Journal and reward:** The five-petaled flower is a botanical clue, **not a cipher**. “PETALS POINT TO WATER” refers to the village fountain. Investigation DC 10 helps; players can infer the answer without rolling. Mara pays **20 gp total** when the journal is returned, whether the party visits the fountain before or after receiving payment. If they return first, Mara identifies the five-petal fountain emblem and offers the fountain visit as an optional epilogue. Do not gate the reward or the lead behind a successful roll. The fountain compartment contains an empty vial and “The spring wakes at first frost.”
 
 ## Location key for professional maps
 1. Gate: three emblems, seed pouch, gardener's note, alternate side latch.
