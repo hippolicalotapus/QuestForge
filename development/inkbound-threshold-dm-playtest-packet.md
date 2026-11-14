@@ -38,6 +38,9 @@ For a first run, record actual elapsed time for each scene and whether the group
 ## Session safety and accessibility
 At the start, invite players to name content boundaries privately or aloud without pressure. Avoid graphic descriptions of injury; the only mandatory hazard consequence is prone. Provide printed large-text clue text or read it aloud. Allow alternative verbal, observational, or creative approaches without punishing players for disability-related barriers.
 
+## First-playtest readiness gate
+Before inviting players, the Dungeon Master should verify that the four mapped locations match the printed handouts, that the journal leaf remains concealed until recovery, and that the optional combat reference is legal and suitable for four Level 1 characters. If that combat reference has not been reviewed, use negotiation and surrender as the default and do not present the encounter as balance-tested. Keep the session private and do not share the DM map or source handout with players.
+
 ## DM observation record (manual; no data collection)
 | Check | Notes |
 |---|---|
