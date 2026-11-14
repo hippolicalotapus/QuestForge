@@ -13,6 +13,7 @@ const tests = [
   ["Botanical clue is explicitly not a cipher", story.includes("botanical clue") && dm.includes("not a cipher")],
   ["Noncombat resolution", story.includes("Persuasion") && dm.includes("conversation")],
   ["No forced combat", dm.includes("not automatic initiative")],
+  ["Gate failure remains fail-forward in both sources", story.includes("noisy second attempt") && dm.includes("noisy second attempt")],
   ["No automatic hazard damage", dm.includes("no automatic damage")],
   ["Player and DM map separation", dm.includes("Player map") && dm.includes("DM map")],
   ["Private release gate", dm.includes("not for sale") && story.includes("NOT FOR PUBLICATION")],
