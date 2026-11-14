@@ -5,6 +5,10 @@ on:
       - feature/voynich-playtest-readiness-20261113
     paths:
       - development/verify-inkbound-packet.cjs
+      - development/verify-inkbound-print-assets.cjs
+      - development/maps/**
+      - development/inkbound-threshold-player-handout-print.html
+      - development/inkbound-threshold-dm-quick-sheet-print.html
       - development/voynich-level1-encounter-draft.md
       - development/inkbound-threshold-dm-playtest-packet.md
       - development/inkbound-threshold-player-handout-01.md
@@ -23,3 +27,4 @@ jobs:
           node-version: '22'
       - run: node --check development/verify-inkbound-packet.cjs
       - run: node development/verify-inkbound-packet.cjs
+      - run: node development/verify-inkbound-print-assets.cjs
