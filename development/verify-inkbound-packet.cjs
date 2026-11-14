@@ -14,6 +14,7 @@ const tests = [
   ["Noncombat resolution", story.includes("Persuasion") && dm.includes("conversation")],
   ["No forced combat", dm.includes("not automatic initiative")],
   ["Gate failure remains fail-forward in both sources", story.includes("noisy second attempt") && dm.includes("noisy second attempt")],
+  ["Journal reward never depends on fountain visit order", story.includes("whether or not they have visited the fountain") && dm.includes("whether the party visits the fountain before or after receiving payment")],
   ["No automatic hazard damage", dm.includes("no automatic damage")],
   ["Player and DM map separation", dm.includes("Player map") && dm.includes("DM map")],
   ["Private release gate", dm.includes("not for sale") && story.includes("NOT FOR PUBLICATION")],
