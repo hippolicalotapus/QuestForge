@@ -9,7 +9,7 @@ A village archivist, Mara Fen, asks the party to recover a missing field journal
 ### Scene 1 — The broken gate (exploration)
 Read aloud: *The glasshouse roof is a jagged crown against the evening sky. Water drips through shattered panes. Beneath the ivy, a brass plate reads: “Only what grows may pass.”*
 
-A stone gate has three carved emblems: a seed, a flame, and a key. Nearby, three ceramic pots contain dry soil. Planting a seed from the pouch on the gardener's hook opens the gate in one minute. A character who investigates the plate can infer the solution with a DC 10 Intelligence (Investigation) check. Failure never blocks progress: a careful search finds the pouch and a faded gardener's note. Breaking the rusted side latch instead requires a DC 12 Strength (Athletics) check and makes noise.
+A stone gate has three carved emblems: a seed, a flame, and a key. Nearby, three ceramic pots contain dry soil. Planting a seed from the pouch on the gardener's hook opens the gate in one minute. A character who investigates the plate can infer the solution with a DC 10 Intelligence (Investigation) check. Failure never blocks progress: a careful search finds the pouch and a faded gardener's note. Breaking the rusted side latch instead requires a DC 12 Strength (Athletics) check and makes noise. On a failed check, the latch still yields after a noisy second attempt that takes one extra minute; failure changes the situation but never traps the party at the gate.
 
 ### Scene 2 — The rootbound hall (hazard and choice)
 Read aloud: *Pale roots cross the tiled floor like handwriting. A silver watering can sits beside a narrow channel carrying rainwater.*
