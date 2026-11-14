@@ -33,6 +33,21 @@ When the characters enter the cellar, the keeper steps between them and the jour
 
 **If the group runs short of time:** After two exchanges, the keeper asks for a simple promise to keep the journal dry, then steps aside. Move directly to the journal clue. Do not reveal the fountain compartment's first-frost note before the party reaches the fountain.
 
+## Four-path rehearsal for the first private playtest
+Use these dry-run paths before inviting players. They are facilitator rehearsals, not evidence of a completed player playtest.
+
+| Path | Player choices | DM response | Required outcome |
+|---|---|---|---|
+| A — Puzzle solvers | Plant seed; water roots; return leaf token; visit fountain before Mara | Open gate after one minute; clear hall; keeper accepts token; reveal fountain note only at fountain | Journal recovered, fountain clue earned, Mara pays 20 gp when journal returned |
+| B — Failed rolls | Fail gate Athletics; rush roots and fail Dexterity; fail keeper Persuasion | Side latch yields after noisy extra minute; character falls prone without automatic damage; keeper accepts protective wrapping | No dead end, no forced combat, journal returned for 20 gp |
+| C — Careful negotiators | Search for pouch; cross hall at half speed; keep token; promise to protect journal; return to Mara first | Supply note and seed; safe crossing; keeper permits no-roll protective plan; Mara pays and identifies fountain | Optional fountain epilogue remains available after payment |
+| D — Time-limited group | Miss initial seed clue; skip trough; refuse combat; need to end by 60 minutes | Reveal gardener note; permit careful crossing; keeper steps aside after promise; Mara points out emblem | Journal and 20 gp resolved; fountain hook can close with an invitation, not a forced extra scene |
+
+**Rehearsal pass criteria:** Every path reaches journal recovery without a mandatory successful die roll, avoids automatic combat, preserves the player's choice about the leaf token, and never reveals the first-frost message before the fountain. Record any mismatch as a manuscript or handout defect before inviting players. These paths do not establish encounter balance, print quality, or real-user usability.
+
+## Timing and table-size controls
+For a **60-minute session**, aim for 8 minutes on the hook, 10 at the gate, 10 in the hall, 15 with the keeper, 10 for return and optional fountain resolution, and 7 for feedback. For a **90-minute session**, use the detailed running-order table above (80 minutes) and allow 10 minutes of flexible exploration or breaks. If the fountain is not visited, Mara can identify its emblem as a future lead; do not narrate the sealed compartment's contents until players actually investigate it. If the party separates, rotate spotlight turns and offer the next clue to whichever character has not yet contributed; do not require a particular character class or skill proficiency.
+
 ## Location key for professional maps
 1. Gate: three emblems, seed pouch, gardener's note, alternate side latch.
 2. Rootbound hall: visible roots, dry trough, watering can, brass leaf token.
