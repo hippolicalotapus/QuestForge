@@ -14,7 +14,7 @@
 ## DM quick reference
 **Opening:** Mara offers **20 gp total to the party**, not per character. Rainwater threatens the journal. The journal is not a reproduction or translation of a real historical manuscript.
 
-**Gate:** Three emblems: seed, flame, key. Plant the available seed to open the gate in one minute. DC 10 Investigation to infer the solution; DC 12 Athletics to force the side latch. Never require a successful roll to discover the seed pouch.
+**Gate:** Three emblems: seed, flame, key. Plant the available seed to open the gate in one minute. DC 10 Investigation to infer the solution; DC 12 Athletics to force the side latch. On a failed latch check, a noisy second attempt opens it after one additional minute; the roll changes time and noise, not whether the party can proceed. Never require a successful roll to discover the seed pouch.
 
 **Hall:** Characters can notice the roots before crossing. A character rushing in makes DC 11 Dexterity save or falls prone; **no automatic damage**. Watering the dry trough clears roots and reveals a brass leaf token. Cautious half-speed travel is safe.
 
