@@ -30,6 +30,11 @@
 
 **Player map:** show accessible paths, gate, hall, cellar and square, but no hidden token or compartment. **DM map:** numbered key, alternative entrance and clue positions. Both maps must be original, legible at print size, and separately reviewed.
 
+## Private playtest setup and handout timing
+Before the session, print the player map and two separate player handout sheets. Keep the DM map, this packet, and the DM quick sheet behind the screen. Give the gate sheet at Scene 1 and the recovered journal sheet only after Scene 3. Do not hand out the combined source Markdown file, which contains both clues.
+
+For a first run, record actual elapsed time for each scene and whether the group used the seed, side latch, cautious crossing, or negotiation options. Pause to check that the fountain clue can be solved without a required die roll. Collect player and DM feedback separately on paper until the separate online forms and QR codes are tested. Do not record player names or contact details in the public repository.
+
 ## Session safety and accessibility
 At the start, invite players to name content boundaries privately or aloud without pressure. Avoid graphic descriptions of injury; the only mandatory hazard consequence is prone. Provide printed large-text clue text or read it aloud. Allow alternative verbal, observational, or creative approaches without punishing players for disability-related barriers.
 
