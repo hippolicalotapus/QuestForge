@@ -10,6 +10,7 @@ const quick = fs.readFileSync(path.join(base,"inkbound-threshold-dm-quick-sheet-
 const tests = [
 ["both maps are SVG", [player,dm].every(x=>x.startsWith("<svg")&&x.trim().endsWith("</svg>"))],
 ["four public locations match", ["GATE / VESTIBULE","ROOTBOUND HALL","CELLAR","VILLAGE FOUNTAIN"].every(x=>player.includes(x)&&dm.includes(x))],
+["three gate pots stay inside the mapped gate", [player,dm].every(x=>["M405 385h29","M449 385h29","M493 385h29"].every(y=>x.includes(y)))],
 ["matching visible gate pots and roof details", [player,dm].every(x=>x.includes("Three ceramic soil pots at the gate")&&x.includes("Broken glasshouse roof panels"))],
 ["DM map includes keyed notes",dm.includes("KEYED DM NOTES")],
 ["DM map note panel has bottom breathing room",(()=>{const panel=dm.match(/<rect x="650" y="(\d+)" width="470" height="(\d+)" fill="#fff9e9"/);const last=dm.match(/<text x="676" y="(\d+)">4 • Five-petal fountain; hidden compartment<\/text>/);return !!panel&&!!last&&Number(panel[1])+Number(panel[2])-Number(last[1])>=20})()],
