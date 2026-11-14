@@ -26,5 +26,6 @@ jobs:
         with:
           node-version: '22'
       - run: node --check development/verify-inkbound-packet.cjs
+      - run: node --check development/verify-inkbound-print-assets.cjs
       - run: node development/verify-inkbound-packet.cjs
       - run: node development/verify-inkbound-print-assets.cjs
