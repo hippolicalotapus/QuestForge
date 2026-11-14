@@ -17,6 +17,7 @@ const tests = [
   ["Player and DM map separation", dm.includes("Player map") && dm.includes("DM map")],
   ["Private release gate", dm.includes("not for sale") && story.includes("NOT FOR PUBLICATION")],
   ["Feedback remains offline", dm.includes("no data collection") && dm.includes("QR codes tested")],
+  ["Player source handout has no DM-only spoiler section", !player.includes("## Dungeon Master") && !player.includes("## DM assembly")],
   ["Player handout excludes DM-only assembly notes", !player.includes("DM) assembly and quality notes") && !player.includes("remove from player print")],
   ["Journal leaf has an explicit delayed reveal", player.includes("recovered journal leaf is given only after the journal is found")],
   ["Player and story share the same fountain clue", player.includes("P E T A L S   P O I N T   T O   W A T E R") && story.includes("PETALS POINT TO WATER")]
