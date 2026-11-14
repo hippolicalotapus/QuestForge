@@ -10,7 +10,7 @@ const tests = [
   ["Level 1 and DM packet", dm.includes("Level 1") && dm.includes("Dungeon Master")],
   ["Gate clue consistent", player.includes("ONLY WHAT GROWS MAY PASS") && story.includes("Only what grows may pass")],
   ["Fountain clue consistent", player.includes("PETALS   P O I N T") || (player.includes("P E T A L S") && story.includes("PETALS POINT TO WATER"))],
-  ["No misleading cipher", !story.toLowerCase().includes("cipher")],
+  ["Botanical clue is explicitly not a cipher", story.includes("not a cipher") && dm.includes("not a cipher")],
   ["Noncombat resolution", story.includes("Persuasion") && dm.includes("conversation")],
   ["No forced combat", dm.includes("not automatic initiative")],
   ["No automatic hazard damage", dm.includes("no automatic damage")],
