@@ -22,6 +22,7 @@ const tests = [
 ["DM sheet avoids clipped print content",quick.includes("box-sizing:border-box")&&quick.includes("overflow-wrap:break-word")&&quick.includes("max-width:none")],
 ["DM print tables preserve row boundaries",quick.includes("tr{break-inside:avoid}")&&quick.includes("thead{display:table-header-group}")],
 ["player journal stays on a separate printed page",handout.includes("break-before:page")&&handout.includes("Give this page only when the journal is recovered")],
+["mobile handout styles cannot override print margins",handout.indexOf("@media(max-width:600px)")>=0&&handout.indexOf("@media print")>handout.indexOf("@media(max-width:600px)")],
 ["player handout retains letter-sized print",handout.includes("@page{size:letter;margin:.5in}")],
 ["DM handout retains letter-sized print",quick.includes("@page{size:letter;margin:.5in}")]
 ];
