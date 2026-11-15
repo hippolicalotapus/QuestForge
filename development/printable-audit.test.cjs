@@ -4,3 +4,5 @@ for(const payload of ['<script>alert(1)</script>','<image onload="alert(1)"/>','
 for(const secret of ['leaf token','Journal'])test('reject hidden clue in player map: '+secret,()=>assert.equal(audit({...ok,playerMap:`<svg>${secret}</svg>`}).ok,false));
 
 for(const payload of ['<image href="https://example.org/tracker.webp"/>','<use xlink:href="//example.org/scene.svg#x"/>'])test('reject remote SVG asset references',()=>{assert.equal(audit({...ok,playerMap:`<svg>${payload}</svg>`}).ok,false);assert.equal(audit({...ok,dmMap:`<svg>KEYED DM NOTES${payload}</svg>`}).ok,false)});
+
+for(const payload of ['<style>.x{fill:url(https://external.example/asset.svg)}</style>','<style>@import url(//external.example/style.css);</style>','<style>@import "https://external.example/style.css";</style>'])test('reject remote CSS resources in both SVG maps',()=>{assert.equal(audit({...ok,playerMap:`<svg>${payload}</svg>`}).ok,false);assert.equal(audit({...ok,dmMap:`<svg>KEYED DM NOTES${payload}</svg>`}).ok,false)});
