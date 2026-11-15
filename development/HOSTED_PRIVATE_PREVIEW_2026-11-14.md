@@ -1,3 +1,11 @@
+# QuestForge private playtest preview — version 2
+
+Latest source: 3cd28064f17b0462f09c2c414b03bdbf6c7ac6a8. Hosted source 208d8ef120d25749910b21c8143588017075c7c3; Sites version 2, deployment appgdep_6af9462a3da08191a2bbe549aae503b2 succeeded. Existing private URL and owner-only access remain unchanged.
+
+The launcher now opens the player map reader: overview, keyboard-accessible full-size detail and textual legend. DM quick-sheet text is16px on narrow screens with wider usable table space. At320px its table widened228px to265px;390px table335px. No horizontal document overflow. Original SVGs are unchanged; DM print raster is identical; reader prints one landscape Letter page. Passed25 manuscript,36 source,49 render checks,13 Node and4 Python tests. Actual Chromium320/390 layout and keyboard-disclosure checks passed. Physical-device verification remains pending. The combined player handout still exposes the recovered journal in screen scrolling; concealment before player release remains an explicit next milestone, not part of this private review update.
+
+## Previous checkpoint (retained history)
+
 # QuestForge private playtest preview
 
 User authorized spending and deployment. Public adventure launch is not claimed. Canonical Level 1 source and original artwork remain in this repository.
