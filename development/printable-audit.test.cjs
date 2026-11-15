@@ -2,3 +2,5 @@ const {test}=require('node:test'),assert=require('node:assert/strict'),{audit}=r
 for(const payload of ['<script>alert(1)</script>','<image onload="alert(1)"/>','<a href="javascript:alert(1)"/>'])test('reject active SVG content in both maps',()=>{assert.equal(audit({...ok,playerMap:`<svg>${payload}</svg>`}).ok,false);assert.equal(audit({...ok,dmMap:`<svg>KEYED DM NOTES${payload}</svg>`}).ok,false)});
 
 for(const secret of ['leaf token','Journal'])test('reject hidden clue in player map: '+secret,()=>assert.equal(audit({...ok,playerMap:`<svg>${secret}</svg>`}).ok,false));
+
+for(const payload of ['<image href="https://example.org/tracker.webp"/>','<use xlink:href="//example.org/scene.svg#x"/>'])test('reject remote SVG asset references',()=>{assert.equal(audit({...ok,playerMap:`<svg>${payload}</svg>`}).ok,false);assert.equal(audit({...ok,dmMap:`<svg>KEYED DM NOTES${payload}</svg>`}).ok,false)});
