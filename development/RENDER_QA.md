@@ -4,6 +4,7 @@ Run the existing Node manuscript and print-source validators first. Then install
 
 ```sh
 python -m pip install -r development/requirements-render-qa.txt
+python -m unittest discover -s development -p 'test_inkbound_botanicals.py'
 python development/verify-inkbound-renders.py --output-dir /tmp/questforge-render-qa
 ```
 
@@ -15,3 +16,5 @@ The renderer reads repository assets and writes only to the requested local outp
 
 The private playtest workflow now watches the renderer, its dependency file and this guide as well as the manuscript/print assets. A separate bounded job installs the pinned renderer dependencies, runs the render checks and retains the private render evidence for three days. Existing Node source checks remain unchanged. This workflow has no deployment step; a newly edited workflow is verified only once its exact commit's Actions run passes.
 
+
+2026-11-15 botanical regression: the illustrations now carry their own SVG paint attributes, so print renderers retain the green stems and outlines, pale petals and gold flower center. The raster tests above run each embedded SVG independently of host-page CSS; they caught the previous black silhouettes before the correction. See `BOTANICAL_PRINT_REVIEW_2026-11-15.md`.
