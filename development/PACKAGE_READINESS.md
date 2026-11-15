@@ -33,7 +33,7 @@ Generated PDFs, PNGs and the temporary ZIP were written outside the repository f
 | Complete runnable Voynich edition | Current materials explicitly identify this as a development excerpt. Verify the full approved manuscript before assembling a complete edition. |
 | Four Level 1 pregenerated character sheets | No such sheets were present in the 16-file baseline. Character Hall is a narrative profile, not a rules-complete character sheet. Review any new character assets separately. |
 | Combat balance and rule rights | Optional creature reference is explicitly unverified. Preserve negotiation routes; do not mark combat balanced or licensed. |
-| Separate player and DM feedback | No live submission endpoint or tested QR images were present. Paper observations are a temporary private fallback. |
+| Separate player and DM feedback | Separate one-page [player](inkbound-threshold-player-feedback-print.html) and [DM](inkbound-threshold-dm-feedback-print.html) paper sheets now support the private fallback. Hosted endpoints and tested QR images remain unverified; see [feedback evidence](FEEDBACK_READINESS.md). |
 | Accessible final PDF/ZIP download | HTML sources render locally; committed final PDF/ZIP count is zero at the baseline. Assemble and verify the intended private package only after missing contents and audience boundaries are resolved. |
 | Professional map acceptance | Legibility/source checks are distinct from approval of finished professional artwork. |
 | Actual player playtest | Rehearsal paths and automated checks are not evidence of an external playtest. |

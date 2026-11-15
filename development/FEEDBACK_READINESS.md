@@ -35,3 +35,13 @@ Inspected all tracked file paths on the current Voynich, default, revenue-storef
 Review the existing static-check branch for controlled integration rather than building duplicate forms. Then implement an approved hosted storage/consent design and distinct player/DM destinations. Do not place QR codes into the printable adventure until both final destinations have verified receipts and successful phone/printed-proof scans. Continue private paper feedback for playtests in the meantime.
 
 No public files, endpoint settings or printable QR assets changed during this audit. No deployment, publication, external message or real participant submission occurred.
+
+## Private paper-feedback milestone — 2026-11-15
+
+The Voynich branch now includes separate [player paper feedback](inkbound-threshold-player-feedback-print.html) and [Dungeon Master paper feedback](inkbound-threshold-dm-feedback-print.html), linked from the playtest packet. Each prints to one Letter page. Player questions cover clarity, contribution, pacing and access needs without revealing adventure secrets; DM prompts cover actual timing, approaches, blocked progress and priorities for the next run.
+
+Both sheets explicitly allow skipping every question and request no name or contact details. They contain no online input fields, submission buttons, scripts, QR images or external destinations. They do not persist or transmit responses. The facilitator is instructed to keep responses private, separate audiences, omit identifying/private disclosures and agree how feedback is used and kept before collection.
+
+Executed verification: `python -m unittest discover -s development -p 'test_inkbound*.py'` passed three tests (including both audience-specific PDF render subtests). The paper-feedback test first failed because both sheets were missing, then passed after implementation. Both resulting pages were visually inspected for writing space, legibility and clipping. The existing manuscript, print-source, printable-audit and 49-check render suite also passed. This is a local print proof, not human usability testing or browser/mobile validation.
+
+The separate online implementation remains preserved on its development branch. No hosted destination, intake storage policy or final QR scan has been verified. These sheets support the already-documented private paper fallback; they do not resolve those online release gates.

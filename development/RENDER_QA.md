@@ -4,7 +4,7 @@ Run the existing Node manuscript and print-source validators first. Then install
 
 ```sh
 python -m pip install -r development/requirements-render-qa.txt
-python -m unittest discover -s development -p 'test_inkbound_botanicals.py'
+python -m unittest discover -s development -p 'test_inkbound*.py'
 python development/verify-inkbound-renders.py --output-dir /tmp/questforge-render-qa
 ```
 
@@ -18,3 +18,5 @@ The private playtest workflow now watches the renderer, its dependency file and 
 
 
 2026-11-15 botanical regression: the illustrations now carry their own SVG paint attributes, so print renderers retain the green stems and outlines, pale petals and gold flower center. The raster tests above run each embedded SVG independently of host-page CSS; they caught the previous black silhouettes before the correction. See `BOTANICAL_PRINT_REVIEW_2026-11-15.md`.
+
+The test discovery command also renders the separate player and DM paper-feedback sheets. Each must remain one Letter page with readable margins and audience-specific text. Paper sheets contain no web submission controls or unverified destinations.
