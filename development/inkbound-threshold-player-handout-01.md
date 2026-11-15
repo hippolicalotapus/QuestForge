@@ -1,5 +1,5 @@
 # The Inkbound Threshold — Player Handout 01
-**QuestForge / The Voynich Codex — Level 1 private playtest material**
+**Manymorrow Studios / The Voynich Codex — Level 1 private playtest material**
 
 ## Archivist Mara Fen's request
 > The rain has reached the scriptorium's cellar. Please bring back my missing field journal before the ink is lost. The old gardener marked his locks with plants rather than keys. I can pay twenty gold pieces when you return.

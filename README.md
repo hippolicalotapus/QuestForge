@@ -1,6 +1,6 @@
-# QuestForge — Fantasy Adventure Studio
+# Manymorrow Studios — Original Worlds and Adventures
 
-Independent fantasy tabletop adventure platform. This repository is separate from Global Intimacy Marketplace.
+Independent studio for original worlds, adventures and games. This repository is separate from Global Intimacy Marketplace.
 
 ## First release goals
 - Approved fantasy homepage and tap-to-unroll interactive navigation map
