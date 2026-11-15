@@ -25,3 +25,13 @@ The standalone player map has a 1200px-wide canvas. Its 21px room labels shrink 
 - The new map-reader print proof was visually inspected: one 792 x 612pt landscape Letter page with the full original map, readable trim margins and no screen controls or additional blank page.
 
 Screen-reader sessions, physical print proofs, actual player testing and final professional-art acceptance remain unverified. No feedback API, participant data collection, new live endpoint or balance-testing claim is introduced by this change.
+
+## Actual Chrome post-change checks
+
+The integrated review checked the changed source in actual Chrome iframes before hosted deployment:
+
+- DM sheet at viewport 320px: document width 305px with a 15px vertical scrollbar, no horizontal overflow, body text 16px. The table widened from 228px to 265px and the measured clue cell from about 99px to 124.58px.
+- DM sheet at viewport 390px: document width 375px, body text 16px, table width 335px.
+- Player map reader at viewport 320px: document width 305px with no horizontal page overflow. Focusing the native disclosure and pressing Enter opened it. The map detail rendered at its intended 1200px width inside a 218px-wide scroll region with 1200px scroll width. The region had an accessible label and was keyboard focusable. The image used the original player SVG.
+
+These checks establish the reported Chrome viewport behavior and native keyboard interaction. They are not a physical-phone, assistive-technology or actual-player test. The screen-reading journal-disclosure issue in the combined player handout remains a separate usability item; its two-page print structure was not changed in this pass.
