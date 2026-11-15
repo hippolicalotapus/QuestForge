@@ -19,3 +19,12 @@
 - The exact original player and DM **SVG maps have not yet been print-rendered and visually inspected in this run**.
 - This inspection covers the original HTML handouts only, not live feedback QR endpoints, D&D balance, rights clearance, player testing, physical printed proofs, or release approval.
 - Do not call the adventure production-ready based on this pass alone.
+
+
+## Addendum — concurrent updated player illustrations verified
+- During this review, an independently created feature commit `96f18594a576a73b69d9dd5d5c137f058d6c4740` added a botanical sprout graphic to the gate page and a five-petal flower graphic to the journal page. This artwork change was **not** authored in the print-review commit.
+- Recovered the exact updated player HTML from the GitHub diff, with **4,715 Unicode characters** including the new inline SVG figures, and re-ran Chromium `Page.printToPDF` using the same print settings.
+- Updated player result: **2 US Letter pages**, page 1 with sprout and gate plate, page 2 with the five-petal flower and journal clue. Inspected both rendered page PNGs: no observed overlap, truncation or accidental extra page; the second-page clue remained separate.
+- Updated player PDF SHA-256: `17a3ddd90bcd1d9f08068a5c93be1bb43ef04c58d7ae7d12bda367416beaa250`.
+- The Dungeon Master HTML was unchanged and its previous one-page print result remains applicable.
+- Maps, actual playtesting, live feedback QR checks and release approval remain separate outstanding gates.
