@@ -20,3 +20,5 @@ The private playtest workflow now watches the renderer, its dependency file and 
 2026-11-15 botanical regression: the illustrations now carry their own SVG paint attributes, so print renderers retain the green stems and outlines, pale petals and gold flower center. The raster tests above run each embedded SVG independently of host-page CSS; they caught the previous black silhouettes before the correction. See `BOTANICAL_PRINT_REVIEW_2026-11-15.md`.
 
 The test discovery command also renders the separate player and DM paper-feedback sheets. Each must remain one Letter page with readable margins and audience-specific text. Paper sheets contain no web submission controls or unverified destinations.
+
+The map-reader test checks the same original SVG is used for overview and detail, the native disclosure starts collapsed, the scroll area is keyboard focusable, and a landscape Letter print proof contains vector map artwork. Original standalone SVG maps remain unchanged. See `MOBILE_READING_REVIEW_2026-11-15.md` for screen-reading evidence and remaining limits.

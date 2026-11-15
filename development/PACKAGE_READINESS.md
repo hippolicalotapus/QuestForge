@@ -11,7 +11,7 @@ Audit date: 2026-11-14. Baseline: `feature/voynich-playtest-readiness-20261113` 
 | DM quick sheet | [Printable quick sheet](inkbound-threshold-dm-quick-sheet-print.html) | Dungeon Master only; rendered to one Letter page |
 | Player clue sheets | [Printable player handouts](inkbound-threshold-player-handout-print.html) | Two separate Letter pages; distribute at different scenes |
 | Combined clue source | [Source handout](inkbound-threshold-player-handout-01.md) | Assembly reference; do not distribute both clues at the gate |
-| Player map | [Player SVG](maps/inkbound-threshold-player-map.svg) | Player-safe schematic; artistic quality remains a separate review |
+| Player map | [Player SVG](maps/inkbound-threshold-player-map.svg) and [responsive reader](inkbound-threshold-player-map-view.html) | Same player-safe schematic; reader adds full-size detail and a text key. Artistic quality remains a separate review |
 | DM map | [DM SVG](maps/inkbound-threshold-dm-map.svg) | Dungeon Master only; contains clue positions and keyed notes |
 | Validation | [Manuscript checks](verify-inkbound-packet.cjs), [print-source checks](verify-inkbound-print-assets.cjs), [render checks](verify-inkbound-renders.py) | Development tools, not proof of player testing |
 
