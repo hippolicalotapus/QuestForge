@@ -16,8 +16,8 @@ Read `the-bell-that-rang-at-midnight.md`. Prepare the three scene zones below, t
 
 **Fast group:** Add the lost traveler and let players trace the shard's beam. **Slow group:** Remove optional checks and give all three chamber clues. Do not cut the free episode's resolved bell-and-lantern ending.
 
-## Original map art specification — not yet drawn
-Create two matching, professional, original maps before public release:
+## Existing playtest schematics — professional final art outstanding
+The repository contains paired private-playtest schematic SVGs at `adventures/assets/bellmere-player-map.svg` and `adventures/assets/bellmere-dm-map.svg`. They are not to scale and are not finished illustrations. Create two matching, professional, original final maps before public release:
 1. **Player map:** Bellmere square, lantern post, tower exterior, lower stair, maintenance door, bell chamber, two exits. No hidden labels, clue answers or secret routes. Readable at phone size and printable on A4/US Letter. Accessible contrast; no tiny critical text.
 2. **Dungeon Master map:** Same geometry and scale, numbered zones **A square / B stair / C maintenance entry / D chamber / E rear exit**. Overlay the shard pivot, striker, beam line, star engraving and optional traveler position. Include scale bar, legend, north arrow and print-safe margins. Check that every route described in the text appears in both maps.
 
